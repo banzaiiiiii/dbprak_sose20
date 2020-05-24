@@ -78,8 +78,8 @@ CREATE TABLE person (
     person_last_name     VARCHAR(50)  NOT NULL,
     person_gender        VARCHAR(10)  NOT NULL,
     person_birthday      DATE         NOT NULL,
-    person_email         VARCHAR(150) NULL,
-    person_speaks        VARCHAR(2)   NULL,
+    person_email         TEXT []      NULL,
+    person_speaks        TEXT []      NULL,
     person_browser_used  VARCHAR(50)  NOT NULL,
     person_location_ip   CIDR         NOT NULL
 );
