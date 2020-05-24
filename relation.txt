@@ -1,0 +1,29 @@
+PLACE(__id, name)
+CONTINENT(__id, --place_id)
+COUNTRY(__id, --place_id, --continent_id)
+CITY(__id, --place_id, --country_id)
+
+ORGANISATION(__id, name)
+COMPANY(__id, --organisation_id, --country_id)
+UNIVERSITY(__id, --organisation_id, --city_id)
+
+TAG(__id, name)
+TAGCLASS(__id, name)
+ISSUBCLASSOF(--__tag_class_id, --__tag_super_class_id)
+HASTYPE(--__tag_id, --__tag_class_id)
+
+PERSON(__id, --city_id, creation_date, first_name, last_name, gender, birthday, email, speaks, browser_used, location_ip)
+KNOWS(--__person_id, --__other_person_id, creation_date)
+STUDYAT(--__person_id, --__university_id, class_year)
+WORKAT(--__person_id, --__company_id, work_from)
+HASINTEREST(--__person_id, --__tag_id)
+
+FORUM(__id, --person_id, title, creation_date)
+HASMEMBER(--__forum_id, --__person_id, join_date)
+FORUMHASTAG(--__forum_id, --__tag_id)
+
+MESSAGE(__id, --person_id, --country_id, creation_date, browser_used, location_ip, content, length)
+POST(__id, --message_id, --forum_id, language, image_file)
+COMMENT(__id, --message_id, --commented_message_id)
+MESSAGEHASTAG(--__message_id, --__tag_id)
+LIKES(--__person_id, --__message_id, creation_date)

@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    image: postgres:12.2
+    restart: always
+    environment:
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+    - db-data:/var/lib/postgresql/data
+    ports:
+    - 5432:5432
+
+volumes:
+  db-data:
+    driver: local

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f7c145b1-fa8c-4844-9bc3-d3342163a235" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../dbsp-ss2020\exportToHTML" />
+  </component>
+  <component name="ProjectId" id="1cAmxowH6Sa4xLn3sM3gCxQHKWs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="dbsp-ss2020" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f7c145b1-fa8c-4844-9bc3-d3342163a235" name="Default Changelist" comment="" />
+      <created>1589980020937</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589980020937</updated>
+      <workItem from="1589980027314" duration="136000" />
+      <workItem from="1589980203265" duration="722000" />
+      <workItem from="1590240622289" duration="1643000" />
+      <workItem from="1590242307779" duration="4830000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="233" y="0" key="#Project_Structure" timestamp="1590246227328">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1590246227328" />
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590245234187">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1590245234187" />
+    <state x="374" y="179" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1590242263898">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="374" y="179" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1280.680@0.0.1280.680" timestamp="1590242263898" />
+    <state x="483" y="230" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1590242476964">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="483" y="230" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1280.680@0.0.1280.680" timestamp="1590242476964" />
+    <state x="356" y="62" key="#docker-compose.yml.postgres:_Compose_Deployment" timestamp="1590243081317">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="356" y="62" key="#docker-compose.yml.postgres:_Compose_Deployment/0.0.1280.680@0.0.1280.680" timestamp="1590243081317" />
+    <state x="356" y="62" key="#docker-compose.yml:_Compose_Deployment" timestamp="1590243962542">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="356" y="62" key="#docker-compose.yml:_Compose_Deployment/0.0.1280.680@0.0.1280.680" timestamp="1590243962542" />
+    <state x="356" y="0" width="596" height="680" key="#run" timestamp="1590241366290">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="356" y="0" width="596" height="680" key="#run/0.0.1280.680@0.0.1280.680" timestamp="1590241366290" />
+    <state x="421" y="82" key="FileChooserDialogImpl" timestamp="1590242848497">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="82" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1590242848497" />
+    <state width="1281" height="295" key="GridCell.Tab.0.bottom" timestamp="1590245579260">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1281" height="295" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1590245579260" />
+    <state width="1281" height="295" key="GridCell.Tab.0.center" timestamp="1590245579260">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1281" height="295" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1590245579260" />
+    <state width="1281" height="295" key="GridCell.Tab.0.left" timestamp="1590245579260">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1281" height="295" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1590245579260" />
+    <state width="1281" height="295" key="GridCell.Tab.0.right" timestamp="1590245579260">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1281" height="295" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1590245579260" />
+    <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1590245162914">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1590245162914" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1590243873031">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1590243873031" />
+    <state x="424" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1590242311093">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="2556" y="344" key="com.intellij.ide.util.TipDialog/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1589980202554" />
+    <state x="424" y="225" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1590242311093" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1590241958864">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1590241958864" />
+  </component>
+</project>
