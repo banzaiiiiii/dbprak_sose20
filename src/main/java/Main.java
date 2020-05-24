@@ -32,6 +32,8 @@ public class Main {
 
                 System.out.println("addPerson...");
                 filler.addPerson(); // speaks!
+                System.out.println("addSpeaks");
+                filler.addSpeaks();
                 System.out.println("addEmail...");
                 filler.addEmail(); // List!
                 System.out.println("addKnows...");

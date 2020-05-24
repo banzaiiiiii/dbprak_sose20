@@ -78,11 +78,13 @@ CREATE TABLE person (
     person_last_name     VARCHAR(50)  NOT NULL,
     person_gender        VARCHAR(10)  NOT NULL,
     person_birthday      DATE         NOT NULL,
-    person_email         TEXT []      NULL,
-    person_speaks        TEXT []      NULL,
+    person_email         VARCHAR(150) []      NULL,
+    person_speaks        VARCHAR(2) []      NULL,
     person_browser_used  VARCHAR(50)  NOT NULL,
     person_location_ip   CIDR         NOT NULL
 );
+
+
 
 CREATE UNIQUE INDEX nullunique ON person(person_email) WHERE person_email IS NOT NULL;
 
@@ -176,3 +178,21 @@ CREATE TABLE likes (
     likes_creation_date DATE NOT NULL,
     CONSTRAINT likes_pk PRIMARY KEY (likes_person_id, likes_message_id)
 );
+
+-- validate email
+CREATE OR REPLACE FUNCTION person_validate_email()
+	RETURNS trigger AS
+$BODY$	
+BEGIN
+		IF NEW.person_email NOT LIKE '%_@%_.__%' THEN
+		SIGNAL SQLSTATE VALUE '45000'
+			SET MESSAGE_TEXT = '[table:person] - person_email column is not valid';
+		END IF;
+	END;
+$BODY$
+
+CREATE TRIGGER validate
+  BEFORE UPDATE
+  ON person
+  FOR EACH ROW
+  EXECUTE PROCEDURE person_validate_email();

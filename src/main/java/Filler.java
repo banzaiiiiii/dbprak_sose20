@@ -236,6 +236,31 @@ public class Filler {
 		}
 	}
 
+	public void addSpeaks() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("./data/person_speaks_language_0_0.csv"));
+			String thisLine = br.readLine();
+			Statement stmt = this.con.createStatement();
+			int arrayIndex = 0;
+
+			while ((thisLine = br.readLine()) != null) {
+				String[] strings = thisLine.split("\\|");
+
+				String sql =String.format("UPDATE person SET person_speaks[%s]='%s' WHERE person_id=%s;",arrayIndex,strings[1],strings[0]);
+
+				try {
+					stmt.executeUpdate(sql);
+				} catch (PSQLException x) {
+					System.out.println("Error@addEmail: " + x.getMessage() + "\n" + sql);
+				}
+				arrayIndex++;
+			}
+			br.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public void addEmail() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("./data/person_email_emailaddress_0_0.csv"));
@@ -248,7 +273,6 @@ public class Filler {
 
 				String sql =String.format("UPDATE person SET person_email[%s]='%s' WHERE person_id=%s;",arrayIndex,strings[1],strings[0]);
 
-				//String sql = "UPDATE person SET person_email='" + strings[1] + "' WHERE person_id=" + strings[0] + ";";
 				try {
 					stmt.executeUpdate(sql);
 				} catch (PSQLException x) {
