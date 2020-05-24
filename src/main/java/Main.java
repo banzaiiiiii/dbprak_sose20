@@ -8,7 +8,7 @@ public class Main {
             Connection con = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/socialnetwork",
                     "postgres",
-                    "password"
+                    "1234"
             );
             Filler filler = new Filler(con);
 
@@ -32,8 +32,8 @@ public class Main {
 
                 System.out.println("addPerson...");
                 filler.addPerson(); // speaks!
-//                System.out.println("addEmail...");
-//                filler.addEmail(); // List!
+                System.out.println("addEmail...");
+                filler.addEmail(); // List!
                 System.out.println("addKnows...");
                 filler.addKnows();
                 System.out.println("addStudyAt...");
