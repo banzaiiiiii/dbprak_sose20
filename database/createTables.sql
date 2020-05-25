@@ -179,20 +179,5 @@ CREATE TABLE likes (
     CONSTRAINT likes_pk PRIMARY KEY (likes_person_id, likes_message_id)
 );
 
--- validate email
-CREATE OR REPLACE FUNCTION person_validate_email()
-	RETURNS trigger AS
-$BODY$	
-BEGIN
-		IF NEW.person_email NOT LIKE '%_@%_.__%' THEN
-		SIGNAL SQLSTATE VALUE '45000'
-			SET MESSAGE_TEXT = '[table:person] - person_email column is not valid';
-		END IF;
-	END;
-$BODY$
 
-CREATE TRIGGER validate
-  BEFORE UPDATE
-  ON person
-  FOR EACH ROW
-  EXECUTE PROCEDURE person_validate_email();
+
