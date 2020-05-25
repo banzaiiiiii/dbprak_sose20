@@ -22,6 +22,7 @@ CREATE TABLE city (
     city_country_id BIGINT REFERENCES country(country_id) ON UPDATE CASCADE
 );
 
+
 -- organisation -> company, university
 
 CREATE TABLE organisation (
@@ -40,6 +41,7 @@ CREATE TABLE university (
     university_organisation_id BIGINT REFERENCES organisation(organisation_id) ON UPDATE CASCADE,
     university_city_id         BIGINT REFERENCES city(city_id) ON UPDATE CASCADE
 );
+
 
 -- tag, tag_class -> is_subclass_of, has_type
 
@@ -65,35 +67,62 @@ CREATE TABLE has_type (
     CONSTRAINT has_type_pk PRIMARY KEY (tag_id, tag_class_id)
 );
 
-
 -- -- person -> knows, study_at, work_at, has_interest
 
-CREATE FUNCTION validate_email(e varchar(150)[], regex text)
-	/*returns true if all elements of e are valide */
-returns boolean as $$
-    select bool_and (n ~ regex)
-    from unnest(e) s(n);
-$$ language sql immutable;
 
 CREATE TABLE person (
     person_id            BIGINT PRIMARY KEY,
-    person_city_id       BIGINT REFERENCES city(city_id) ON UPDATE CASCADE,
+    person_city_id       BIGINT REFERENCES city(city_id) ON UPDATE CASCADE ON DELETE SET NULL NOT NULL,
     person_creation_date TIMESTAMP    NOT NULL,
     person_first_name    VARCHAR(50)  NOT NULL,
     person_last_name     VARCHAR(50)  NOT NULL,
     person_gender        VARCHAR(10)  NOT NULL,
     person_birthday      DATE         NOT NULL,
-    person_email         varchar(150) []      NULL,
-    person_speaks        VARCHAR(2) []      NULL,
+    person_email         VARCHAR(150)[]   NULL,
+    person_speaks        CHAR(2)[]        NULL,
     person_browser_used  VARCHAR(50)  NOT NULL,
-    person_location_ip   CIDR         NOT NULL,
-	CONSTRAINT email_valide CHECK (validate_email(person_email,'^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$' )),
-	CONSTRAINT birthday_valide CHECK(person_birthday < current_date)
+    person_location_ip   CIDR         NOT NULL
 );
 
+--CREATE UNIQUE INDEX person_email_nullunique ON person(person_email) WHERE person_email IS NOT NULL;
 
+CREATE OR REPLACE FUNCTION person_validate_birthday() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+        DECLARE
 
-CREATE UNIQUE INDEX nullunique ON person(person_email) WHERE person_email IS NOT NULL;
+        BEGIN
+            IF NEW.person_birthday > now() THEN
+                RAISE EXCEPTION 'Debug--> person_validate_birthday date check %, %, %', NEW.person_birthday, TG_OP, now();
+            END IF;
+            RETURN NEW;
+        END;
+    $$;
+
+DROP TRIGGER IF EXISTS person_validate_birthday_trigger on person;
+CREATE TRIGGER person_validate_birthday_trigger BEFORE INSERT OR UPDATE ON person
+    FOR EACH ROW EXECUTE PROCEDURE person_validate_birthday();
+
+CREATE OR REPLACE FUNCTION person_validate_email() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+        DECLARE
+            email VARCHAR(150);
+        BEGIN
+            IF NEW.person_email IS NOT NULL THEN
+                FOREACH email IN ARRAY NEW.person_email LOOP
+                    IF email NOT SIMILAR TO '[A-Za-z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}' THEN
+                        RAISE EXCEPTION 'Debug--> person_validate_email regex check %, %', TG_OP, email;
+                    END IF;
+                END LOOP;
+            END IF;
+            RETURN NEW;
+        END;
+    $$;
+
+DROP TRIGGER IF EXISTS person_validate_email_trigger on person;
+CREATE TRIGGER person_validate_email_trigger BEFORE INSERT OR UPDATE ON person
+    FOR EACH ROW EXECUTE PROCEDURE person_validate_email();
 
 CREATE TABLE knows (
     knows_person_id       BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -185,6 +214,3 @@ CREATE TABLE likes (
     likes_creation_date DATE NOT NULL,
     CONSTRAINT likes_pk PRIMARY KEY (likes_person_id, likes_message_id)
 );
-
-
-
