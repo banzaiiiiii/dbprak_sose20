@@ -22,7 +22,6 @@ CREATE TABLE city (
     city_country_id BIGINT REFERENCES country(country_id) ON UPDATE CASCADE
 );
 
-
 -- organisation -> company, university
 
 CREATE TABLE organisation (
@@ -41,7 +40,6 @@ CREATE TABLE university (
     university_organisation_id BIGINT REFERENCES organisation(organisation_id) ON UPDATE CASCADE,
     university_city_id         BIGINT REFERENCES city(city_id) ON UPDATE CASCADE
 );
-
 
 -- tag, tag_class -> is_subclass_of, has_type
 
@@ -70,6 +68,13 @@ CREATE TABLE has_type (
 
 -- -- person -> knows, study_at, work_at, has_interest
 
+CREATE FUNCTION validate_email(e varchar(150)[], regex text)
+	/*returns true if all elements of e are valide */
+returns boolean as $$
+    select bool_and (n ~ regex)
+    from unnest(e) s(n);
+$$ language sql immutable;
+
 CREATE TABLE person (
     person_id            BIGINT PRIMARY KEY,
     person_city_id       BIGINT REFERENCES city(city_id) ON UPDATE CASCADE,
@@ -78,10 +83,12 @@ CREATE TABLE person (
     person_last_name     VARCHAR(50)  NOT NULL,
     person_gender        VARCHAR(10)  NOT NULL,
     person_birthday      DATE         NOT NULL,
-    person_email         VARCHAR(150) []      NULL,
+    person_email         varchar(150) []      NULL,
     person_speaks        VARCHAR(2) []      NULL,
     person_browser_used  VARCHAR(50)  NOT NULL,
-    person_location_ip   CIDR         NOT NULL
+    person_location_ip   CIDR         NOT NULL,
+	CONSTRAINT email_valide CHECK (validate_email(person_email,'^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$' )),
+	CONSTRAINT birthday_valide CHECK(person_birthday < current_date)
 );
 
 

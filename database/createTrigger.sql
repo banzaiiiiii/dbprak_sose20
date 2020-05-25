@@ -1,16 +1,16 @@
 -- validate email & birthdays
 
-CREATE OR REPLACE FUNCTION validateEmail() RETURNS trigger AS $validateEmail$
+CREATE FUNCTION validateEmail() RETURNS trigger AS $validateEmail$
     BEGIN
-        IF NEW.person_email NOT LIKE '%_@%_.__%' THEN
-			RAISE EXCEPTION 'email not valide';
-		END IF;
-		IF NEW.person_birthday > CURRENT_DATE THEN
-			RAISE EXCEPTION 'birthday is in future';
-		END IF;
-		
-		Return NEW;
+        IF NEW.person_email NOT LIKE '%@%' THEN
+			New.person_email = null;
+	 END IF;
+		--IF NEW.person_birthday > CURRENT_DATE THEN
+	--	New.person_email = null;
+		--END IF;	
+		RETURN NEW;
     END;
+	
 $validateEmail$ LANGUAGE plpgsql;
 
 CREATE TRIGGER validateEmail BEFORE INSERT OR UPDATE ON person
