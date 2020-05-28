@@ -12,11 +12,14 @@ TAGCLASS(__id, name)
 ISSUBCLASSOF(--__tag_class_id, --__tag_super_class_id)
 HASTYPE(--__tag_id, --__tag_class_id)
 
-PERSON(__id, --city_id, creation_date, first_name, last_name, gender, birthday, email, speaks, browser_used, location_ip)
+PERSON(__id, --city_id, creation_date, first_name, last_name, gender, birthday, browser_used, location_ip)
+PERSON_EMAIL(__id, --email_person_id, email) 
+PERSON_SPEAKS(__id,--language_person_id, language)
 KNOWS(--__person_id, --__other_person_id, creation_date)
 STUDYAT(--__person_id, --__university_id, class_year)
 WORKAT(--__person_id, --__company_id, work_from)
 HASINTEREST(--__person_id, --__tag_id)
+
 
 FORUM(__id, --person_id, title, creation_date)
 HASMEMBER(--__forum_id, --__person_id, join_date)
