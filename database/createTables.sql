@@ -78,10 +78,20 @@ CREATE TABLE person (
     person_last_name     VARCHAR(50)  NOT NULL,
     person_gender        VARCHAR(10)  NOT NULL,
     person_birthday      DATE         NOT NULL,
-    person_email         VARCHAR(150)[]   NULL,
-    person_speaks        CHAR(2)[]        NULL,
     person_browser_used  VARCHAR(50)  NOT NULL,
     person_location_ip   CIDR         NOT NULL
+);
+
+CREATE TABLE person_email(
+	id SERIAL PRIMARY KEY,
+	email_person_id BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE SET NULL,
+	email VARCHAR(150) NULL
+);
+
+CREATE TABLE person_speaks(
+	id SERIAL PRIMARY KEY,
+	language_person_id BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE SET NULL,
+	language VARCHAR(2) NULL
 );
 
 --CREATE UNIQUE INDEX person_email_nullunique ON person(person_email) WHERE person_email IS NOT NULL;
@@ -103,26 +113,24 @@ DROP TRIGGER IF EXISTS person_validate_birthday_trigger on person;
 CREATE TRIGGER person_validate_birthday_trigger BEFORE INSERT OR UPDATE ON person
     FOR EACH ROW EXECUTE PROCEDURE person_validate_birthday();
 
+	
+	DROP TRIGGER IF EXISTS person_validate_email_trigger on person_email;
+CREATE TRIGGER person_validate_email_trigger BEFORE INSERT OR UPDATE ON person_email
+    FOR EACH ROW EXECUTE PROCEDURE person_validate_email();
+	
+	
 CREATE OR REPLACE FUNCTION person_validate_email() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-        DECLARE
-            email VARCHAR(150);
         BEGIN
-            IF NEW.person_email IS NOT NULL THEN
-                FOREACH email IN ARRAY NEW.person_email LOOP
+            IF NEW.email IS NOT NULL THEN
                     IF email NOT SIMILAR TO '[A-Za-z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}' THEN
                         RAISE EXCEPTION 'Debug--> person_validate_email regex check %, %', TG_OP, email;
                     END IF;
-                END LOOP;
             END IF;
             RETURN NEW;
         END;
     $$;
-
-DROP TRIGGER IF EXISTS person_validate_email_trigger on person;
-CREATE TRIGGER person_validate_email_trigger BEFORE INSERT OR UPDATE ON person
-    FOR EACH ROW EXECUTE PROCEDURE person_validate_email();
 
 CREATE TABLE knows (
     knows_person_id       BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE CASCADE,

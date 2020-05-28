@@ -220,8 +220,8 @@ public class Filler {
 
 				String sql = "INSERT INTO person VALUES ('"
 						+ strings[0] + "','" + strings[8] + "'," + "TO_TIMESTAMP('" + strings[5] + "','YYYY-MM-DDTHH24:MI:SS.MS+SSSS')" + ",'"
-						+ strings[1] + "','" + strings[2] + "','" + strings[3] + "'," + "TO_DATE('" + strings[4] + "',' YYYY-MM-DD')"
-						+ ",NULL,NULL,'" + strings[7] + "','" + strings[6] + "');";
+						+ strings[1] + "','" + strings[2] + "','" + strings[3] + "'," + "TO_DATE('" + strings[4] + "',' YYYY-MM-DD')" + ",'"
+						+ strings[7] + "','" + strings[6] + "');";
 				try {
 					stmt.executeUpdate(sql);
 				} catch (PSQLException x) {
@@ -241,19 +241,16 @@ public class Filler {
 			BufferedReader br = new BufferedReader(new FileReader("./data/person_speaks_language_0_0.csv"));
 			String thisLine = br.readLine();
 			Statement stmt = this.con.createStatement();
-			int arrayIndex = 0;
-
 			while ((thisLine = br.readLine()) != null) {
 				String[] strings = thisLine.split("\\|");
 
-				String sql =String.format("UPDATE person SET person_speaks[%s]='%s' WHERE person_id=%s;",arrayIndex,strings[1],strings[0]);
+				String sql = "INSERT INTO person_speaks (language_person_id, language) VALUES (" + strings[0] + ",'" + strings[1] + "');";
 
 				try {
 					stmt.executeUpdate(sql);
 				} catch (PSQLException x) {
 					System.out.println("Error@addEmail: " + x.getMessage() + "\n" + sql);
 				}
-				arrayIndex++;
 			}
 			br.close();
 
@@ -266,19 +263,18 @@ public class Filler {
 			BufferedReader br = new BufferedReader(new FileReader("./data/person_email_emailaddress_0_0.csv"));
 			String thisLine = br.readLine();
 			Statement stmt = this.con.createStatement();
-			int arrayIndex = 0;
 
 			while ((thisLine = br.readLine()) != null) {
 				String[] strings = thisLine.split("\\|");
 
-				String sql =String.format("UPDATE person SET person_email[%s]='%s' WHERE person_id=%s;",arrayIndex,strings[1],strings[0]);
+				String sql = "INSERT INTO person_email (email_person_id, email) VALUES (" + strings[0] + ",'"
+						+ strings[1] + "');";
 
 				try {
 					stmt.executeUpdate(sql);
 				} catch (PSQLException x) {
 					System.out.println("Error@addEmail: " + x.getMessage() + "\n" + sql);
 				}
-				arrayIndex++;
 			}
 			br.close();
 
