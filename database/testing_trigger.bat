@@ -1,1 +1,0 @@
-"D:\Program Files\PostgreSQL\bin\psql.exe" -U postgres -f createTrigger.sql socialnetwork
