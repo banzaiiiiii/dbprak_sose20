@@ -96,41 +96,6 @@ CREATE TABLE person_speaks(
 
 --CREATE UNIQUE INDEX person_email_nullunique ON person(person_email) WHERE person_email IS NOT NULL;
 
-CREATE OR REPLACE FUNCTION person_validate_birthday() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-        DECLARE
-
-        BEGIN
-            IF NEW.person_birthday > now() THEN
-                RAISE EXCEPTION 'Debug--> person_validate_birthday date check %, %, %', NEW.person_birthday, TG_OP, now();
-            END IF;
-            RETURN NEW;
-        END;
-    $$;
-
-DROP TRIGGER IF EXISTS person_validate_birthday_trigger on person;
-CREATE TRIGGER person_validate_birthday_trigger BEFORE INSERT OR UPDATE ON person
-    FOR EACH ROW EXECUTE PROCEDURE person_validate_birthday();
-
-	
-	DROP TRIGGER IF EXISTS person_validate_email_trigger on person_email;
-CREATE TRIGGER person_validate_email_trigger BEFORE INSERT OR UPDATE ON person_email
-    FOR EACH ROW EXECUTE PROCEDURE person_validate_email();
-	
-	
-CREATE OR REPLACE FUNCTION person_validate_email() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-        BEGIN
-            IF NEW.email IS NOT NULL THEN
-                    IF email NOT SIMILAR TO '[A-Za-z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}' THEN
-                        RAISE EXCEPTION 'Debug--> person_validate_email regex check %, %', TG_OP, email;
-                    END IF;
-            END IF;
-            RETURN NEW;
-        END;
-    $$;
 
 CREATE TABLE knows (
     knows_person_id       BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE CASCADE,
