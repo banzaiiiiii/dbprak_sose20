@@ -339,6 +339,7 @@ SELECT person_first_name, person_last_name FROM (pkp_symmetric INNER JOIN
     ON knows_person_id=person_id) INNER JOIN person ON knows_other_person_id=person.person_id;
 
 --13. Welche Personen sind direkt oder indirekt mit ‘Jun Hu’ (id 94) verbunden (befreundet)? Geben Sie für jede Person die Distanz zu Jun an.
+--TODO:
 -------------
 -- Records: ???
 -------------
