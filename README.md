@@ -1,5 +1,5 @@
 <h1 align="center">
-  Datenbanksysteme - Praktikum
+  DB - Praktikum
 </h1>
 
 <h4 align="center">Sommersemester 2020</h4>
@@ -22,16 +22,10 @@ docker-compose up --build
 # Run the database setup on Windows using
 cd database
 runDB.bat
+# Make sure the path to psql in .\database\runDB.bat fits your postgres version
 
 # Transform into relation-model
 - Inside Main.java, put in the password of your local DB
+--> DriverManager.getConnection(..., ..., <PASSWORD>)
 - Run Main.java
 ```
-!! Maybe you have to edit the path to psql in .\database\runDB.bat according to the installed psql version !!
-
-## TODO
-[ ] Lösung für Emails und Sprachen
-[ ] Relationenmodell nach Aufgabenstellung anpassen
-[ ] rethink ON UPDATE and ON DELETE
-[ ] rethink ids in certain tables
-[ ] Rules on Emails and Birthdays
