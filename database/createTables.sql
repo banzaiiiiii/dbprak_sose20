@@ -129,7 +129,7 @@ CREATE TABLE has_interest (
 
 CREATE TABLE forum (
     forum_id                  BIGINT PRIMARY KEY,
-    forum_moderator_person_id BIGINT REFERENCES person(person_id) ON UPDATE CASCADE,
+    forum_moderator_person_id BIGINT REFERENCES person(person_id) ON UPDATE CASCADE ON DELETE CASCADE,
     forum_title               VARCHAR(50) NOT NULL,
     forum_creation_date TIMESTAMP NOT NULL
 );
