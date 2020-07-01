@@ -218,42 +218,14 @@ limit 10;
 
 --10. Welche Personen haben noch nie ein “Like” für einen Kommentar oder Post bekommen? Sortieren Sie die Ausgabe alphabetisch nach dem Nachnamen.
 -------------
--- Records: 27
+-- Records: 37
 -------------
--- Ahmed            | Ayesha
--- Ali              | Mirza Kalich
--- Bernal           | Pablo
--- Colombo          | Luigi
--- Davies           | Bryn
--- Dia              | Abdoulaye Khouma
--- Diaz             | Roberto
--- Diouf            | Albaye Papa
--- Dobrunov         | Aleksandr
--- Feltsman         | Alexei
--- Ferrer           | Ali
--- Johnson          | John
--- Koksal           | Mehmet
--- Loan             | Cam
--- Murray           | Neil
--- Pereira          | Jose
--- Qureshi          | Abdul Jamil
--- Ravalomanana     | Marc
--- Redl             | Otto
--- Rodriguez        | Alfonso
--- Sato             | Masahiro
--- Shevchenko       | Anatoly
--- Wei              | Cheng
--- Yang             | Jie
--- Zakrzewski       | Jan
--- Zhang            | Zhi
--- Zhang            | Li
-
 --Anmerkung: Aufgabenstellung impliziert auch Personen, die noch nie einen Post oder Kommentar verfasst haben.
 SELECT *
 FROM
 ((SELECT person_first_name, person_last_name FROM person)
 EXCEPT
-(SELECT p.person_last_name, p.person_first_name
+(SELECT p.person_first_name, p.person_last_name
         FROM person AS p
             JOIN message AS m ON p.person_id=m.message_person_id
             JOIN likes AS l ON l.likes_message_id=m.message_id)) AS x
