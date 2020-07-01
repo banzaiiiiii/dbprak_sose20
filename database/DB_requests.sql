@@ -247,11 +247,11 @@ limit 10;
 -- Zakrzewski       | Jan
 -- Zhang            | Zhi
 -- Zhang            | Li
+
+--Anmerkung: Aufgabenstellung impliziert auch Personen, die noch nie einen Post oder Kommentar verfasst haben.
 SELECT *
 FROM
-((SELECT p.person_last_name, p.person_first_name
-        FROM person AS p
-            JOIN message AS m ON p.person_id=m.message_person_id)
+((SELECT person_first_name, person_last_name FROM person)
 EXCEPT
 (SELECT p.person_last_name, p.person_first_name
         FROM person AS p
