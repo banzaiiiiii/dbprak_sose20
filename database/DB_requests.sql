@@ -11,11 +11,16 @@ FROM university u
 WHERE p.place_name = 'Africa';
 
 -- 2. Wie viele Forenbeiträge (Posts) hat die älteste Person verfasst (Ausgabe: Name, #Forenbeiträge)?
+-------------
+-- Records: 1
+-------------
+-- Masahiro          | Sato             |     1
 SELECT p.person_first_name, p.person_last_name, count(po.post_id)
 FROM message AS m
     JOIN post AS po on po.post_message_id=m.message_id
     JOIN person AS p on p.person_id=m.message_person_id
 GROUP BY p.person_birthday, p.person_last_name, p.person_first_name
+ORDER BY p.person_birthday ASC
 limit 1;
 
 --3. Wie viele Kommentare zu Posts gibt es aus jedem Land (Ausgabe aufsteigend sortiert nach Kommentaranzahl)?
@@ -37,6 +42,11 @@ FROM country cou LEFT JOIN
 GROUP BY name ORDER BY count, name;
 
 --4. Aus welchen Städten stammen die meisten Nutzer (Ausgabe Name + Einwohnerzahl)?
+-- Solution:
+-- Ludwigsburg | 2
+-- Rahim Yar Khan | 2
+SET CLIENT_ENCODING TO 'utf8';
+
 SELECT pl.place_name, COUNT(p.person_id)
 FROM city AS c
     JOIN person AS p ON p.person_city_id=c.city_id
@@ -69,21 +79,76 @@ WHERE concat(p1.person_first_name, ' ', p1.person_last_name) = 'Hans Johansson'
 ORDER BY name;
 
 --6. Wer sind die “echten” Freundesfreunde von ‘Hans Johansson’? “Echte” Freundesfreunde dürfen nicht gleichzeitig direkte Freunde von ‘Hans Johansson’ sein. Sortieren Sie die Ausgabe alphabetisch nach dem Nachnamen.
-(SELECT DISTINCT p2.person_first_name, p2.person_last_name
-FROM
-knows AS k
-    JOIN person AS p0 on k.knows_person_id=p0.person_id
-    JOIN person AS p1 on k.knows_other_person_id=p1.person_id
-    join knows AS k2 on k2.knows_person_id=p1.person_id
-    JOIN person AS p2 on k2.knows_other_person_id=p2.person_id
-WHERE p0.person_first_name='Hans' AND p0.person_last_name='Johansson'
-ORDER BY p2.person_last_name ASC)
+-------------
+-- Records: 48
+-------------
+-- Wei                 | Hu
+-- Lin                 | Zhang
+-- Francisco           | Reyes
+-- Tamas               | Gabor
+-- Baby                | Yang
+-- Cheng               | Chen
+-- Chong               | Liu
+-- Jimmy               | Burak
+-- Ali                 | Abouba
+-- Akira               | Yamamoto
+-- Jie                 | Li
+-- Chen                | Yang
+-- Jun                 | Hu
+-- Evangelos           | Alkaios
+-- Amy                 | Chen
+-- Djelaludin          | Zaland
+-- Alexei              | Kahnovich
+-- Alec                | Lin
+-- Roberto             | Diaz
+-- Jie                 | Yang
+-- Yahya Ould Ahmed El | Abdallahi
+-- Anson               | Chen
+-- Babar               | Khan
+-- Lei                 | Zhang
+-- Joakim              | Larsson
+-- Alexei              | Codreanu
+-- Abdul Haris         | Tobing
+-- Yang                | Wang
+-- Otto                | Redl
+-- Li                  | Zhang
+-- Tissa               | Perera
+-- Ken                 | Yamada
+-- Alejandro           | Rodriguez
+-- Aleksandr           | Efimkin
+-- Jae-Jin             | Park
+-- Pablo               | Bernal
+-- Hao                 | Li
+-- Neil                | Murray
+-- Anatoly             | Shevchenko
+-- Celso               | Oliveira
+-- Chen                | Li
+-- Abdul Jamil         | Qureshi
+-- Hans                | Johansson
+-- Miguel              | Gonzalez
+-- Cam                 | Loan
+-- Wei                 | Wei
+-- Adrian              | Bravo
+-- Oleg                | Bazayev
+SELECT person_first_name, person_last_name
+FROM person INNER JOIN
+     (SELECT pkp_symmetric.*
+      FROM pkp_symmetric INNER JOIN
+           (SELECT pkp_symmetric.* FROM pkp_symmetric INNER JOIN (SELECT person_id
+                                                                  FROM person
+                                                                  WHERE person_first_name='Hans'
+                                                                    AND person_last_name='Johansson') AS TABELLE
+                                                                 ON person_id=knows_person_id) AS TABELLE1
+           ON pkp_symmetric.knows_person_id=TABELLE1.knows_other_person_id) AS TABELLE2
+     ON person_id=knows_other_person_id
+
 EXCEPT
-(SELECT p1.person_first_name, p1.person_last_name
-FROM knows AS k
-    JOIN person AS p0 on k.knows_person_id=p0.person_id
-    JOIN person AS p1 on k.knows_other_person_id=p1.person_id
-WHERE p0.person_first_name='Hans' AND p0.person_last_name='Johansson');
+
+SELECT p2.person_first_name, p2.person_last_name AS name
+FROM pkp_symmetric
+         JOIN person p1 ON pkp_symmetric.knows_person_id = p1.person_id
+         JOIN person p2 ON pkp_symmetric.knows_other_person_id = p2.person_id
+WHERE concat(p1.person_first_name, ' ', p1.person_last_name) = 'Hans Johansson';
 
 --7. Welche Nutzer sind Mitglied in allen Foren, in denen auch ‘Mehmet Koksal’ Mitglied ist (Angabe Name)?
 -------------
@@ -109,10 +174,18 @@ HAVING count(hm.has_member_forum_id) = (SELECT count(sf.forum_id) FROM same_foru
 ORDER BY name;
 
 --8. Geben Sie die prozentuale Verteilung der Nutzer bzgl. ihrer Herkunft aus verschiedenen Kontinenten an!
+-------------
+-- Records: 5
+-------------
+-- North_America |       9
+-- South_America |       4
+-- Africa        |      11
+-- Asia          |      50
+-- Europe        |      25
 SELECT pl.place_name, (count(pl.place_name)*100/(SELECT count(*) FROM person AS p
                                                                     JOIN city AS ci ON ci.city_id=p.person_city_id
                                                                     JOIN country AS cou ON cou.country_id=ci.city_country_id
-                                                                    JOIN place AS pl ON pl.place_id=cou.country_continent_id))
+                                                                    JOIN place AS pl ON pl.place_id=cou.country_continent_id)) AS percent
 FROM person AS p
     JOIN city AS ci ON ci.city_id=p.person_city_id
     JOIN country AS cou ON cou.country_id=ci.city_country_id
@@ -144,6 +217,36 @@ ORDER BY count DESC
 limit 10;
 
 --10. Welche Personen haben noch nie ein “Like” für einen Kommentar oder Post bekommen? Sortieren Sie die Ausgabe alphabetisch nach dem Nachnamen.
+-------------
+-- Records: 27
+-------------
+-- Ahmed            | Ayesha
+-- Ali              | Mirza Kalich
+-- Bernal           | Pablo
+-- Colombo          | Luigi
+-- Davies           | Bryn
+-- Dia              | Abdoulaye Khouma
+-- Diaz             | Roberto
+-- Diouf            | Albaye Papa
+-- Dobrunov         | Aleksandr
+-- Feltsman         | Alexei
+-- Ferrer           | Ali
+-- Johnson          | John
+-- Koksal           | Mehmet
+-- Loan             | Cam
+-- Murray           | Neil
+-- Pereira          | Jose
+-- Qureshi          | Abdul Jamil
+-- Ravalomanana     | Marc
+-- Redl             | Otto
+-- Rodriguez        | Alfonso
+-- Sato             | Masahiro
+-- Shevchenko       | Anatoly
+-- Wei              | Cheng
+-- Yang             | Jie
+-- Zakrzewski       | Jan
+-- Zhang            | Zhi
+-- Zhang            | Li
 SELECT *
 FROM
 ((SELECT p.person_last_name, p.person_first_name
@@ -216,24 +319,29 @@ WHERE fwp.count > (
 ORDER BY fwp.name;
 
 --12. Welche Personen sind mit der Person befreundet, die die meisten Likes auf einen Post bekommen hat? Sortieren Sie die Ausgabe alphabetisch nach dem Nachnamen.
---TODO: Warum nur eine Person als Ausgabe?? -> "limit 1" in der sub-query scheint auf die ganze query zu wirken, obwohl sie das nicht sollte
-SELECT p0.person_last_name, p0.person_first_name
-FROM
-    (SELECT p.person_id --person with most likes
-    FROM person AS p
-        JOIN message AS m ON p.person_id=m.message_person_id
-        JOIN post AS po ON po.post_message_id=m.message_id
-        JOIN likes AS l ON l.likes_message_id=m.message_id
-    GROUP BY p.person_id
-    ORDER BY COUNT(l.likes_person_id)
-    limit 1) AS sub
-        JOIN knows AS k ON k.knows_other_person_id=sub.person_id
-        JOIN person AS p0 ON p0.person_id=k.knows_person_id
-ORDER BY p0.person_last_name;
-
+-------------
+-- Records: 8
+-------------
+-- Neil              | Murray
+-- Miguel            | Gonzalez
+-- Roberto           | Diaz
+-- Jorge             | Araujo Castro
+-- Karl              | Fischer
+-- Alejandro         | Rodriguez
+-- Cam               | Loan
+-- Chen              | Yang
+SELECT person_first_name, person_last_name FROM (pkp_symmetric INNER JOIN
+    (SELECT person_id, COUNT(*) as likes FROM
+        LIKES INNER JOIN (PERSON INNER JOIN MESSAGE ON message_person_id=person_id) ON likes_message_id=message_id
+     GROUP BY person_id
+     ORDER BY likes DESC
+     LIMIT 1) AS TABELLE
+    ON knows_person_id=person_id) INNER JOIN person ON knows_other_person_id=person.person_id;
 
 --13. Welche Personen sind direkt oder indirekt mit ‘Jun Hu’ (id 94) verbunden (befreundet)? Geben Sie für jede Person die Distanz zu Jun an.
---TODO:
+-------------
+-- Records: ???
+-------------
 WITH RECURSIVE RelationshipCte (person_id, friend_id, depth, is_in_p, is_in_f) AS
    (
        SELECT
@@ -247,15 +355,15 @@ WITH RECURSIVE RelationshipCte (person_id, friend_id, depth, is_in_p, is_in_f) A
        UNION
 
        SELECT DISTINCT ON (friend_id)
-           k.person1 AS person_id,
-           k.person2 AS friend_id,
+           k.knows_person_id AS person_id,
+           k.knows_other_person_id AS friend_id,
            depth + 1,
-           k.person2 NOT IN (cte.person_id),
-           k.person2 NOT IN (cte.friend_id)
+           k.knows_other_person_id NOT IN (cte.person_id),
+           k.knows_other_person_id NOT IN (cte.friend_id)
        FROM RelationshipCte cte
-                JOIN pkp_symmetric k ON cte.friend_id = k.person1
+                JOIN pkp_symmetric k ON cte.friend_id = k.knows_person_id
             --WHERE NOT k.person2 = 94 AND depth < 5 AND k.person2 IN RelationshipCte(person_id)
-       WHERE k.person2 NOT IN (cte.friend_id) AND depth < 5
+       WHERE k.knows_other_person_id NOT IN (cte.friend_id) AND depth < 5
        --WHERE k.person2 NOT IN (SELECT person_id FROM RelationshipCte)
    )
 SELECT
@@ -270,6 +378,20 @@ FROM RelationshipCte r
          JOIN person f ON r.friend_id = f.person_id
 --GROUP BY friend_name, depth
 ORDER BY depth, friend_name;
+
+--2. Variante:
+WITH RECURSIVE knows_junhu(knows_direct, knows_indirect, distance, path, cycle) AS (
+    SELECT pkp.knows_person_id, pkp.knows_other_person_id, 0, array[pkp.knows_person_id], false
+    FROM pkp_symmetric pkp
+    WHERE pkp.knows_person_id = 94
+
+    union
+
+    select pkp.knows_person_id, pkp.knows_other_person_id, kj.distance + 1, path ||  pkp.knows_person_id, pkp.knows_person_id = ANY(path)
+    FROM knows_junhu kj inner join pkp_symmetric pkp on pkp.knows_person_id = kj.knows_indirect
+    WHERE pkp.knows_other_person_id <> 94 and not cycle and pkp.knows_person_id = kj.knows_indirect
+)
+select * from knows_junhu;
 
 --14. Erweitern Sie die Anfrage zu Aufgabe 13 indem Sie zusätzlich zur Distanz den Pfad zwischen den Nutzern ausgeben.
 --TODO:
