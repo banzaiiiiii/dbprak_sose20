@@ -14,13 +14,11 @@ WHERE p.place_name = 'Africa';
 -------------
 -- Records: 1
 -------------
--- Masahiro          | Sato             |     1
-SELECT p.person_first_name, p.person_last_name, count(po.post_id)
-FROM message AS m
-    JOIN post AS po on po.post_message_id=m.message_id
-    JOIN person AS p on p.person_id=m.message_person_id
-GROUP BY p.person_birthday, p.person_last_name, p.person_first_name
-ORDER BY p.person_birthday ASC
+-- 0 | Joakim  | Larsson
+SELECT COUNT(DISTINCT message_id), pe.person_first_name, pe.person_last_name
+FROM (post p JOIN message m ON p.post_message_id=m.message_id) AS X FULL OUTER JOIN PERSON pe ON pe.person_id = X.message_person_id
+GROUP BY pe.person_first_name, person_last_name, pe.person_birthday
+ORDER BY pe.person_birthday ASC
 limit 1;
 
 --3. Wie viele Kommentare zu Posts gibt es aus jedem Land (Ausgabe aufsteigend sortiert nach Kommentaranzahl)?

@@ -3,14 +3,26 @@
   <component name="ChangeListManager">
     <list default="true" id="f7c145b1-fa8c-4844-9bc3-d3342163a235" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/person_email_emailaddress_0_0.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/person_email_emailaddress_0_0.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/createTables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/createTables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Filler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Filler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/DB_requests.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/DB_requests.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="ExportToHTMLSettings">
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../dbsp-ss2020\exportToHTML" />
@@ -24,15 +36,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/database" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="consents" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Walther\IdeaProjects\dbprak_sose20\database" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -65,6 +83,8 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
     </list>
     <recent_temporary>
       <list>
@@ -86,20 +106,42 @@
       <workItem from="1589980203265" duration="722000" />
       <workItem from="1590240622289" duration="1643000" />
       <workItem from="1590242307779" duration="4830000" />
+      <workItem from="1593604875822" duration="9984000" />
     </task>
+    <task id="LOCAL-00001" summary="-Ziad Sehili's suggestion">
+      <created>1593612994067</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1593612994067</updated>
+    </task>
+    <task id="LOCAL-00002" summary="-adjust 10.)">
+      <created>1593614309984</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1593614309984</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="-Ziad Sehili's suggestion" />
+    <MESSAGE value="-adjust 10.)" />
+    <option name="LAST_COMMIT_MESSAGE" value="-adjust 10.)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="233" y="0" key="#Project_Structure" timestamp="1590246227328">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1590246227328" />
-    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590245234187">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1593608745560">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593608745560" />
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1590245234187" />
     <state x="374" y="179" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1590242263898">
       <screen x="0" y="0" width="1280" height="680" />
@@ -121,6 +163,14 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="356" y="0" width="596" height="680" key="#run/0.0.1280.680@0.0.1280.680" timestamp="1590241366290" />
+    <state x="259" y="0" key="CommitChangelistDialog2" timestamp="1593614308780">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="259" y="0" key="CommitChangelistDialog2/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593614308780" />
+    <state x="121" y="51" key="DiffContextDialog" timestamp="1593614269407">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="121" y="51" key="DiffContextDialog/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593614269407" />
     <state x="2552" y="125" key="FileChooserDialogImpl" timestamp="1590434235500">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -170,19 +220,40 @@
     </state>
     <state width="1877" height="233" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1590667062770" />
     <state width="1877" height="347" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590427151958" />
+    <state width="200" height="539" key="HiddenNamespacesPopup" timestamp="1593608698711">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="200" height="539" key="HiddenNamespacesPopup/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593608698711" />
     <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1590245162914">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1590245162914" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1590243873031">
+    <state x="142" y="0" key="SettingsEditor" timestamp="1593608674795">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593608674795" />
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1590243873031" />
+    <state x="422" y="0" key="VCS.ChangeListViewerDialog" timestamp="1593605092012">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="422" y="0" key="VCS.ChangeListViewerDialog/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593605092012" />
+    <state x="233" y="70" key="Vcs.Push.Dialog.v2" timestamp="1593613252894">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="70" key="Vcs.Push.Dialog.v2/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593613252894" />
+    <state x="508" y="75" key="com.intellij.database.view.ui.DbObjectDialog" timestamp="1593608713059">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="508" y="75" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593608713059" />
     <state x="424" y="225" key="com.intellij.ide.util.TipDialog" timestamp="1590242311093">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="2556" y="344" key="com.intellij.ide.util.TipDialog/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1589980202554" />
     <state x="424" y="225" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1590242311093" />
+    <state x="449" y="253" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1593614784914">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="449" y="253" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1593614784914" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1590241958864">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
