@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Forum" table="forum" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Forum" table="forum" schema="public" catalog="socialnetwork">
         <id name="forumId" column="forum_id"/>
         <property name="forumModeratorPersonId" column="forum_moderator_person_id"/>
         <property name="forumTitle" column="forum_title"/>

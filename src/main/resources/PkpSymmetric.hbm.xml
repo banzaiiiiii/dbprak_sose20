@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.PkpSymmetric" table="pkp_symmetric" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.PkpSymmetric" table="pkp_symmetric" schema="public" catalog="socialnetwork">
         <property name="knowsPersonId" column="knows_person_id"/>
         <property name="knowsOtherPersonId" column="knows_other_person_id"/>
     </class>

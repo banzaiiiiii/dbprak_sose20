@@ -4,8 +4,8 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.HasMember" table="has_member" schema="public" catalog="socialnetwork">
-        <composite-id mapped="true" class="com.pojos.HasMemberPK">
+    <class name="com.hibernate.pojos.HasMember" table="has_member" schema="public" catalog="socialnetwork">
+        <composite-id mapped="true" class="com.hibernate.pojos.HasMemberPK">
             <key-property name="hasMemberForumId" column="has_member_forum_id"/>
             <key-property name="hasMemberPersonId" column="has_member_person_id"/>
         </composite-id>

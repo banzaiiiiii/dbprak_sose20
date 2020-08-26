@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Place" table="place" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Place" table="place" schema="public" catalog="socialnetwork">
         <id name="placeId" column="place_id"/>
         <property name="placeName" column="place_name"/>
     </class>

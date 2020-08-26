@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Post" table="post" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Post" table="post" schema="public" catalog="socialnetwork">
         <id name="postId" column="post_id"/>
         <property name="postMessageId" column="post_message_id"/>
         <property name="postForumId" column="post_forum_id"/>

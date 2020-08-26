@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Country" table="country" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Country" table="country" schema="public" catalog="socialnetwork">
         <id name="countryId" column="country_id"/>
         <property name="countryPlaceId" column="country_place_id"/>
         <property name="countryContinentId" column="country_continent_id"/>

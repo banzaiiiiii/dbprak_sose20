@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Message" table="message" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Message" table="message" schema="public" catalog="socialnetwork">
         <id name="messageId" column="message_id"/>
         <property name="messagePersonId" column="message_person_id"/>
         <property name="messageCountryId" column="message_country_id"/>

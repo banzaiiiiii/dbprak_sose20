@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pojos.Tag" table="tag" schema="public" catalog="socialnetwork">
+    <class name="com.hibernate.pojos.Tag" table="tag" schema="public" catalog="socialnetwork">
         <id name="tagId" column="tag_id"/>
         <property name="tagName" column="tag_name"/>
     </class>
