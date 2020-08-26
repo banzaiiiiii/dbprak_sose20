@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.Forum" table="forum" schema="public" catalog="socialnetwork">
+        <id name="forumId" column="forum_id"/>
+        <property name="forumModeratorPersonId" column="forum_moderator_person_id"/>
+        <property name="forumTitle" column="forum_title"/>
+        <property name="forumCreationDate" column="forum_creation_date"/>
+    </class>
+</hibernate-mapping>

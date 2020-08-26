@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.HasInterest" table="has_interest" schema="public" catalog="socialnetwork">
+        <composite-id mapped="true" class="com.pojos.HasInterestPK">
+            <key-property name="hasInterestPersonId" column="has_interest_person_id"/>
+            <key-property name="hasInterestTagId" column="has_interest_tag_id"/>
+        </composite-id>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.PostgreSQL82Dialect
+        </property>
+
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <property name = "hibernate.connection.url">jdbc:postgresql://localhost:5432/socialnetwork</property>
+
+
+        <property name="connection_pool_size">1</property>
+
+        <property name="hbm2ddl.auto">create</property>
+
+        <property name="show_sql">true</property>
+
+        <!-- List of XML mapping files -->
+        <mapping resource = "City.hbm.xml"/>
+        <mapping resource = "Comment.hbm.xml"/>
+        <mapping resource = "Company.hbm.xml"/>
+        <mapping resource = "Continent.hbm.xml"/>
+        <mapping resource = "Country.hbm.xml"/>
+        <mapping resource = "Forum.hbm.xml"/>
+        <mapping resource = "ForumHasTag.hbm.xml"/>
+        <mapping resource = "HasInterest.hbm.xml"/>
+        <mapping resource = "HasMember.hbm.xml"/>
+        <mapping resource = "HasType.hbm.xml"/>
+        <mapping resource = "IsSubclassOf.hbm.xml"/>
+        <mapping resource = "Knows.hbm.xml"/>
+        <mapping resource = "Likes.hbm.xml"/>
+        <mapping resource = "Message.hbm.xml"/>
+        <mapping resource = "MessageHasTag.hbm.xml"/>
+        <mapping resource = "Organisation.hbm.xml"/>
+        <mapping resource = "Person.hbm.xml"/>
+        <mapping resource = "PkpSymmetric.hbm.xml"/>
+        <mapping resource = "Place.hbm.xml"/>
+        <mapping resource = "Post.hbm.xml"/>
+        <mapping resource = "StudyAt.hbm.xml"/>
+        <mapping resource = "Tag.hbm.xml"/>
+        <mapping resource = "TagClass.hbm.xml"/>
+        <mapping resource = "University.hbm.xml"/>
+        <mapping resource = "WorkAt.hbm.xml"/>
+
+    </session-factory>
+</hibernate-configuration>

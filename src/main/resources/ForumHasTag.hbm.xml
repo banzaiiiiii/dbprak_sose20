@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.ForumHasTag" table="forum_has_tag" schema="public" catalog="socialnetwork">
+        <composite-id mapped="true" class="com.pojos.ForumHasTagPK">
+            <key-property name="forumHasTagForumId" column="forum_has_tag_forum_id"/>
+            <key-property name="forumHasTagTagId" column="forum_has_tag_tag_id"/>
+        </composite-id>
+    </class>
+</hibernate-mapping>

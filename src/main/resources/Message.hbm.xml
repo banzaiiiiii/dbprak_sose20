@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.Message" table="message" schema="public" catalog="socialnetwork">
+        <id name="messageId" column="message_id"/>
+        <property name="messagePersonId" column="message_person_id"/>
+        <property name="messageCountryId" column="message_country_id"/>
+        <property name="messageCreationDate" column="message_creation_date"/>
+        <property name="messageBrowserUsed" column="message_browser_used"/>
+        <property name="messageLocationIp" column="message_location_ip"/>
+        <property name="messageContent" column="message_content"/>
+        <property name="messageLength" column="message_length"/>
+    </class>
+</hibernate-mapping>

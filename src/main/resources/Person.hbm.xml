@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.Person" table="person" schema="public" catalog="socialnetwork">
+        <id name="personId" column="person_id"/>
+        <property name="personCityId" column="person_city_id"/>
+        <property name="personCreationDate" column="person_creation_date"/>
+        <property name="personFirstName" column="person_first_name"/>
+        <property name="personLastName" column="person_last_name"/>
+        <property name="personGender" column="person_gender"/>
+        <property name="personBirthday" column="person_birthday"/>
+        <property name="personEmail" column="person_email"/>
+        <property name="personSpeaks" column="person_speaks"/>
+        <property name="personBrowserUsed" column="person_browser_used"/>
+        <property name="personLocationIp" column="person_location_ip"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pojos.HasMember" table="has_member" schema="public" catalog="socialnetwork">
+        <composite-id mapped="true" class="com.pojos.HasMemberPK">
+            <key-property name="hasMemberForumId" column="has_member_forum_id"/>
+            <key-property name="hasMemberPersonId" column="has_member_person_id"/>
+        </composite-id>
+        <property name="hasMemberJoinDate" column="has_member_join_date"/>
+    </class>
+</hibernate-mapping>
