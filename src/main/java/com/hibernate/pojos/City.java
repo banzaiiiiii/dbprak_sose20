@@ -1,9 +1,10 @@
 package com.hibernate.pojos;
 
+import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,20 +18,10 @@ public class City extends Place
 {
     private long cityId;
     private Long cityPlaceId;
-    private Country country;
-
-    @OneToMany(mappedBy = "city")
-    public Person getPersonen()
-    {
-        return personen;
-    }
-
-    public void setPersonen(final Person personen)
-    {
-        this.personen = personen;
-    }
-
-    private Person personen;
+    private Long cityCountryId;
+    private Country countryByCityCountryId;
+    private Collection<Person> peopleByCityId;
+    private Collection<University> universitiesByCityId;
 
     @Id
     @Column(name = "city_id")
@@ -56,19 +47,6 @@ public class City extends Place
         this.cityPlaceId = cityPlaceId;
     }
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_country_id", referencedColumnName = "country_id")
-    public Country getCountry()
-    {
-        return country;
-    }
-
-    public void setCountry(final Country country)
-    {
-        this.country = country;
-    }
-
     @Override
     public boolean equals(final Object o)
     {
@@ -91,7 +69,7 @@ public class City extends Place
         {
             return false;
         }
-        if (country != null ? !country.equals(city.country) : city.country != null)
+        if (cityCountryId != null ? !cityCountryId.equals(city.cityCountryId) : city.cityCountryId != null)
         {
             return false;
         }
@@ -104,7 +82,41 @@ public class City extends Place
     {
         int result = (int) (cityId ^ (cityId >>> 32));
         result = 31 * result + (cityPlaceId != null ? cityPlaceId.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (cityCountryId != null ? cityCountryId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "city_country_id", referencedColumnName = "country_id")
+    public Country getCountryByCityCountryId()
+    {
+        return countryByCityCountryId;
+    }
+
+    public void setCountryByCityCountryId(final Country countryByCityCountryId)
+    {
+        this.countryByCityCountryId = countryByCityCountryId;
+    }
+
+    @OneToMany(mappedBy = "cityByPersonCityId")
+    public Collection<Person> getPeopleByCityId()
+    {
+        return peopleByCityId;
+    }
+
+    public void setPeopleByCityId(final Collection<Person> peopleByCityId)
+    {
+        this.peopleByCityId = peopleByCityId;
+    }
+
+    @OneToMany(mappedBy = "cityByUniversityCityId")
+    public Collection<University> getUniversitiesByCityId()
+    {
+        return universitiesByCityId;
+    }
+
+    public void setUniversitiesByCityId(final Collection<University> universitiesByCityId)
+    {
+        this.universitiesByCityId = universitiesByCityId;
     }
 }

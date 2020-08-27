@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -15,6 +17,8 @@ public class StudyAt
     private long studyAtPersonId;
     private long studyAtUniversityId;
     private int studyAtClassYear;
+    private Person personByStudyAtPersonId;
+    private University universityByStudyAtUniversityId;
 
     @Id
     @Column(name = "study_at_person_id")
@@ -89,5 +93,29 @@ public class StudyAt
         result = 31 * result + (int) (studyAtUniversityId ^ (studyAtUniversityId >>> 32));
         result = 31 * result + studyAtClassYear;
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "study_at_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByStudyAtPersonId()
+    {
+        return personByStudyAtPersonId;
+    }
+
+    public void setPersonByStudyAtPersonId(final Person personByStudyAtPersonId)
+    {
+        this.personByStudyAtPersonId = personByStudyAtPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "study_at_university_id", referencedColumnName = "university_id", nullable = false, insertable = false, updatable = false)
+    public University getUniversityByStudyAtUniversityId()
+    {
+        return universityByStudyAtUniversityId;
+    }
+
+    public void setUniversityByStudyAtUniversityId(final University universityByStudyAtUniversityId)
+    {
+        this.universityByStudyAtUniversityId = universityByStudyAtUniversityId;
     }
 }

@@ -51,7 +51,7 @@ public class PersonRelatedAPI
                 System.out.print("  Last Name: " + person.getPersonLastName());
                 System.out.print("  Gender: " + person.getPersonGender());
                 System.out.print("  Birthday: " + person.getPersonBirthday());
-                System.out.print("  City: " + person.getCity().getPlaceName());
+                System.out.print("  City: " + person.getCityByPersonCityId().getPlaceName());
             }
             tx.commit();
         }

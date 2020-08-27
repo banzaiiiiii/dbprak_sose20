@@ -2,13 +2,11 @@ package com.hibernate.pojos;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +17,7 @@ import javax.persistence.OneToMany;
 public class Person
 {
     private long personId;
-    private City city;
+    private long personCityId;
     private Timestamp personCreationDate;
     private String personFirstName;
     private String personLastName;
@@ -29,6 +27,16 @@ public class Person
     private String personSpeaks;
     private String personBrowserUsed;
     private String personLocationIp;
+    private Collection<Forum> forumsByPersonId;
+    private Collection<HasInterest> hasInterestsByPersonId;
+    private Collection<HasMember> hasMembersByPersonId;
+    private Collection<Knows> knowsByPersonId;
+    private Collection<Knows> knowsByPersonId_0;
+    private Collection<Likes> likesByPersonId;
+    private Collection<Message> messagesByPersonId;
+    private City cityByPersonCityId;
+    private Collection<StudyAt> studyAtsByPersonId;
+    private Collection<WorkAt> workAtsByPersonId;
 
     @Id
     @Column(name = "person_id")
@@ -40,18 +48,6 @@ public class Person
     public void setPersonId(final long personId)
     {
         this.personId = personId;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_city_id", referencedColumnName = "city_id")
-    public City getCity()
-    {
-        return city;
-    }
-
-    public void setCity(final City city)
-    {
-        this.city = city;
     }
 
     @Basic
@@ -180,7 +176,7 @@ public class Person
         {
             return false;
         }
-        if (city != person.city)
+        if (personCityId != person.personCityId)
         {
             return false;
         }
@@ -228,7 +224,7 @@ public class Person
     public int hashCode()
     {
         int result = (int) (personId ^ (personId >>> 32));
-        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (int) (personCityId ^ (personCityId >>> 32));
         result = 31 * result + (personCreationDate != null ? personCreationDate.hashCode() : 0);
         result = 31 * result + (personFirstName != null ? personFirstName.hashCode() : 0);
         result = 31 * result + (personLastName != null ? personLastName.hashCode() : 0);
@@ -239,5 +235,116 @@ public class Person
         result = 31 * result + (personBrowserUsed != null ? personBrowserUsed.hashCode() : 0);
         result = 31 * result + (personLocationIp != null ? personLocationIp.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "personByForumModeratorPersonId")
+    public Collection<Forum> getForumsByPersonId()
+    {
+        return forumsByPersonId;
+    }
+
+    public void setForumsByPersonId(final Collection<Forum> forumsByPersonId)
+    {
+        this.forumsByPersonId = forumsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByHasInterestPersonId")
+    public Collection<HasInterest> getHasInterestsByPersonId()
+    {
+        return hasInterestsByPersonId;
+    }
+
+    public void setHasInterestsByPersonId(final Collection<HasInterest> hasInterestsByPersonId)
+    {
+        this.hasInterestsByPersonId = hasInterestsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByHasMemberPersonId")
+    public Collection<HasMember> getHasMembersByPersonId()
+    {
+        return hasMembersByPersonId;
+    }
+
+    public void setHasMembersByPersonId(final Collection<HasMember> hasMembersByPersonId)
+    {
+        this.hasMembersByPersonId = hasMembersByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByKnowsPersonId")
+    public Collection<Knows> getKnowsByPersonId()
+    {
+        return knowsByPersonId;
+    }
+
+    public void setKnowsByPersonId(final Collection<Knows> knowsByPersonId)
+    {
+        this.knowsByPersonId = knowsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByKnowsOtherPersonId")
+    public Collection<Knows> getKnowsByPersonId_0()
+    {
+        return knowsByPersonId_0;
+    }
+
+    public void setKnowsByPersonId_0(final Collection<Knows> knowsByPersonId_0)
+    {
+        this.knowsByPersonId_0 = knowsByPersonId_0;
+    }
+
+    @OneToMany(mappedBy = "personByLikesPersonId")
+    public Collection<Likes> getLikesByPersonId()
+    {
+        return likesByPersonId;
+    }
+
+    public void setLikesByPersonId(final Collection<Likes> likesByPersonId)
+    {
+        this.likesByPersonId = likesByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByMessagePersonId")
+    public Collection<Message> getMessagesByPersonId()
+    {
+        return messagesByPersonId;
+    }
+
+    public void setMessagesByPersonId(final Collection<Message> messagesByPersonId)
+    {
+        this.messagesByPersonId = messagesByPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "person_city_id", referencedColumnName = "city_id", nullable = false)
+    public City getCityByPersonCityId()
+    {
+        return cityByPersonCityId;
+    }
+
+    public void setCityByPersonCityId(final City cityByPersonCityId)
+    {
+        this.cityByPersonCityId = cityByPersonCityId;
+    }
+
+    @OneToMany(mappedBy = "personByStudyAtPersonId")
+    public Collection<StudyAt> getStudyAtsByPersonId()
+    {
+        return studyAtsByPersonId;
+    }
+
+    public void setStudyAtsByPersonId(final Collection<StudyAt> studyAtsByPersonId)
+    {
+        this.studyAtsByPersonId = studyAtsByPersonId;
+    }
+
+    @OneToMany(mappedBy = "personByWorkAtPersonId")
+    public Collection<WorkAt> getWorkAtsByPersonId()
+    {
+        return workAtsByPersonId;
+    }
+
+    public void setWorkAtsByPersonId(final Collection<WorkAt> workAtsByPersonId)
+    {
+        this.workAtsByPersonId = workAtsByPersonId;
     }
 }

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -14,6 +16,8 @@ public class IsSubclassOf
 {
     private long tagClassId;
     private long tagSuperclassId;
+    private TagClass tagClassByTagClassId;
+    private TagClass tagClassByTagSuperclassId;
 
     @Id
     @Column(name = "tag_class_id")
@@ -71,5 +75,29 @@ public class IsSubclassOf
         int result = (int) (tagClassId ^ (tagClassId >>> 32));
         result = 31 * result + (int) (tagSuperclassId ^ (tagSuperclassId >>> 32));
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tag_class_id", referencedColumnName = "tag_class_id", nullable = false, insertable = false, updatable = false)
+    public TagClass getTagClassByTagClassId()
+    {
+        return tagClassByTagClassId;
+    }
+
+    public void setTagClassByTagClassId(final TagClass tagClassByTagClassId)
+    {
+        this.tagClassByTagClassId = tagClassByTagClassId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tag_superclass_id", referencedColumnName = "tag_class_id", nullable = false, insertable = false, updatable = false)
+    public TagClass getTagClassByTagSuperclassId()
+    {
+        return tagClassByTagSuperclassId;
+    }
+
+    public void setTagClassByTagSuperclassId(final TagClass tagClassByTagSuperclassId)
+    {
+        this.tagClassByTagSuperclassId = tagClassByTagSuperclassId;
     }
 }

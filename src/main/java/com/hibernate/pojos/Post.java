@@ -4,6 +4,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -14,6 +16,8 @@ public class Post
     private Long postForumId;
     private String postLanguage;
     private String postImageFile;
+    private Message messageByPostMessageId;
+    private Forum forumByPostForumId;
 
     @Id
     @Column(name = "post_id")
@@ -25,30 +29,6 @@ public class Post
     public void setPostId(final long postId)
     {
         this.postId = postId;
-    }
-
-    @Basic
-    @Column(name = "post_message_id")
-    public Long getPostMessageId()
-    {
-        return postMessageId;
-    }
-
-    public void setPostMessageId(final Long postMessageId)
-    {
-        this.postMessageId = postMessageId;
-    }
-
-    @Basic
-    @Column(name = "post_forum_id")
-    public Long getPostForumId()
-    {
-        return postForumId;
-    }
-
-    public void setPostForumId(final Long postForumId)
-    {
-        this.postForumId = postForumId;
     }
 
     @Basic
@@ -122,5 +102,29 @@ public class Post
         result = 31 * result + (postLanguage != null ? postLanguage.hashCode() : 0);
         result = 31 * result + (postImageFile != null ? postImageFile.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "post_message_id", referencedColumnName = "message_id")
+    public Message getMessageByPostMessageId()
+    {
+        return messageByPostMessageId;
+    }
+
+    public void setMessageByPostMessageId(final Message messageByPostMessageId)
+    {
+        this.messageByPostMessageId = messageByPostMessageId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "post_forum_id", referencedColumnName = "forum_id")
+    public Forum getForumByPostForumId()
+    {
+        return forumByPostForumId;
+    }
+
+    public void setForumByPostForumId(final Forum forumByPostForumId)
+    {
+        this.forumByPostForumId = forumByPostForumId;
     }
 }

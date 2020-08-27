@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -14,6 +16,8 @@ public class MessageHasTag
 {
     private long messageHasTagMessageId;
     private long messageHasTagTagId;
+    private Message messageByMessageHasTagMessageId;
+    private Tag tagByMessageHasTagTagId;
 
     @Id
     @Column(name = "message_has_tag_message_id")
@@ -71,5 +75,29 @@ public class MessageHasTag
         int result = (int) (messageHasTagMessageId ^ (messageHasTagMessageId >>> 32));
         result = 31 * result + (int) (messageHasTagTagId ^ (messageHasTagTagId >>> 32));
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "message_has_tag_message_id", referencedColumnName = "message_id", nullable = false, insertable = false, updatable = false)
+    public Message getMessageByMessageHasTagMessageId()
+    {
+        return messageByMessageHasTagMessageId;
+    }
+
+    public void setMessageByMessageHasTagMessageId(final Message messageByMessageHasTagMessageId)
+    {
+        this.messageByMessageHasTagMessageId = messageByMessageHasTagMessageId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "message_has_tag_tag_id", referencedColumnName = "tag_id", nullable = false, insertable = false, updatable = false)
+    public Tag getTagByMessageHasTagTagId()
+    {
+        return tagByMessageHasTagTagId;
+    }
+
+    public void setTagByMessageHasTagTagId(final Tag tagByMessageHasTagTagId)
+    {
+        this.tagByMessageHasTagTagId = tagByMessageHasTagTagId;
     }
 }

@@ -1,12 +1,13 @@
 package com.hibernate.pojos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -17,18 +18,7 @@ public class Continent extends Place
 {
     private long continentId;
     private Long continentPlaceId;
-    private List<Country> countries = new ArrayList<>();
-
-    @OneToMany(mappedBy = "continent")
-    public List<Country> getCountries()
-    {
-        return countries;
-    }
-
-    public void setCountries(final List<Country> countries)
-    {
-        this.countries = countries;
-    }
+    private Collection<Country> countriesByContinentId;
 
     @Id
     @Column(name = "continent_id")
@@ -86,5 +76,16 @@ public class Continent extends Place
         int result = (int) (continentId ^ (continentId >>> 32));
         result = 31 * result + (continentPlaceId != null ? continentPlaceId.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "continentByCountryContinentId")
+    public Collection<Country> getCountriesByContinentId()
+    {
+        return countriesByContinentId;
+    }
+
+    public void setCountriesByContinentId(final Collection<Country> countriesByContinentId)
+    {
+        this.countriesByContinentId = countriesByContinentId;
     }
 }

@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -16,6 +18,8 @@ public class Knows
     private long knowsPersonId;
     private long knowsOtherPersonId;
     private Timestamp knowsCreationDate;
+    private Person personByKnowsPersonId;
+    private Person personByKnowsOtherPersonId;
 
     @Id
     @Column(name = "knows_person_id")
@@ -90,5 +94,29 @@ public class Knows
         result = 31 * result + (int) (knowsOtherPersonId ^ (knowsOtherPersonId >>> 32));
         result = 31 * result + (knowsCreationDate != null ? knowsCreationDate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "knows_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByKnowsPersonId()
+    {
+        return personByKnowsPersonId;
+    }
+
+    public void setPersonByKnowsPersonId(final Person personByKnowsPersonId)
+    {
+        this.personByKnowsPersonId = personByKnowsPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "knows_other_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByKnowsOtherPersonId()
+    {
+        return personByKnowsOtherPersonId;
+    }
+
+    public void setPersonByKnowsOtherPersonId(final Person personByKnowsOtherPersonId)
+    {
+        this.personByKnowsOtherPersonId = personByKnowsOtherPersonId;
     }
 }

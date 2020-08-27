@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -14,6 +16,8 @@ public class HasInterest
 {
     private long hasInterestPersonId;
     private long hasInterestTagId;
+    private Person personByHasInterestPersonId;
+    private Tag tagByHasInterestTagId;
 
     @Id
     @Column(name = "has_interest_person_id")
@@ -71,5 +75,29 @@ public class HasInterest
         int result = (int) (hasInterestPersonId ^ (hasInterestPersonId >>> 32));
         result = 31 * result + (int) (hasInterestTagId ^ (hasInterestTagId >>> 32));
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "has_interest_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByHasInterestPersonId()
+    {
+        return personByHasInterestPersonId;
+    }
+
+    public void setPersonByHasInterestPersonId(final Person personByHasInterestPersonId)
+    {
+        this.personByHasInterestPersonId = personByHasInterestPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "has_interest_tag_id", referencedColumnName = "tag_id", nullable = false, insertable = false, updatable = false)
+    public Tag getTagByHasInterestTagId()
+    {
+        return tagByHasInterestTagId;
+    }
+
+    public void setTagByHasInterestTagId(final Tag tagByHasInterestTagId)
+    {
+        this.tagByHasInterestTagId = tagByHasInterestTagId;
     }
 }

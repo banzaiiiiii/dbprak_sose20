@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -14,6 +16,8 @@ public class ForumHasTag
 {
     private long forumHasTagForumId;
     private long forumHasTagTagId;
+    private Forum forumByForumHasTagForumId;
+    private Tag tagByForumHasTagTagId;
 
     @Id
     @Column(name = "forum_has_tag_forum_id")
@@ -71,5 +75,29 @@ public class ForumHasTag
         int result = (int) (forumHasTagForumId ^ (forumHasTagForumId >>> 32));
         result = 31 * result + (int) (forumHasTagTagId ^ (forumHasTagTagId >>> 32));
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "forum_has_tag_forum_id", referencedColumnName = "forum_id", nullable = false, insertable = false, updatable = false)
+    public Forum getForumByForumHasTagForumId()
+    {
+        return forumByForumHasTagForumId;
+    }
+
+    public void setForumByForumHasTagForumId(final Forum forumByForumHasTagForumId)
+    {
+        this.forumByForumHasTagForumId = forumByForumHasTagForumId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "forum_has_tag_tag_id", referencedColumnName = "tag_id", nullable = false, insertable = false, updatable = false)
+    public Tag getTagByForumHasTagTagId()
+    {
+        return tagByForumHasTagTagId;
+    }
+
+    public void setTagByForumHasTagTagId(final Tag tagByForumHasTagTagId)
+    {
+        this.tagByForumHasTagTagId = tagByForumHasTagTagId;
     }
 }

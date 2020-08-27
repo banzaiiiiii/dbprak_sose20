@@ -2,13 +2,10 @@ package com.hibernate.pojos;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 
-@Entity
 // https://stackoverflow.com/questions/190296/how-do-you-effectively-model-inheritance-in-a-database
 // https://www.baeldung.com/hibernate-inheritance
 // Since we use Table-Per-Type (TPT) inheritance in our database, we have to use 'InheritanceType.JOINED'
@@ -18,7 +15,6 @@ public class Place
     private long placeId;
     private String placeName;
 
-    @Id
     @Column(name = "place_id")
     public long getPlaceId()
     {

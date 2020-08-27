@@ -1,12 +1,10 @@
 package com.hibernate.pojos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,24 +13,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 
 @Entity
-@PrimaryKeyJoinColumn(name = "country_place_id") // falls das nicht klappt "country_id" probieren
+@PrimaryKeyJoinColumn(name = "country_place_id")
 public class Country extends Place
 {
     private long countryId;
     private Long countryPlaceId;
-    private Continent continent;
-    private List<City> cities = new ArrayList<>();
-
-    @OneToMany(mappedBy = "country")
-    public List<City> getCities()
-    {
-        return cities;
-    }
-
-    public void setCities(final List<City> cities)
-    {
-        this.cities = cities;
-    }
+    private Long countryContinentId;
+    private Collection<City> citiesByCountryId;
+    private Collection<Company> companiesByCountryId;
+    private Continent continentByCountryContinentId;
+    private Collection<Message> messagesByCountryId;
 
     @Id
     @Column(name = "country_id")
@@ -58,18 +48,6 @@ public class Country extends Place
         this.countryPlaceId = countryPlaceId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_continent_id", referencedColumnName = "continent_id")
-    public Continent getContinent()
-    {
-        return continent;
-    }
-
-    public void setContinent(final Continent continent)
-    {
-        this.continent = continent;
-    }
-
     @Override
     public boolean equals(final Object o)
     {
@@ -92,7 +70,7 @@ public class Country extends Place
         {
             return false;
         }
-        if (continent != null ? !continent.equals(country.continent) : country.continent != null)
+        if (countryContinentId != null ? !countryContinentId.equals(country.countryContinentId) : country.countryContinentId != null)
         {
             return false;
         }
@@ -105,7 +83,52 @@ public class Country extends Place
     {
         int result = (int) (countryId ^ (countryId >>> 32));
         result = 31 * result + (countryPlaceId != null ? countryPlaceId.hashCode() : 0);
-        result = 31 * result + (continent != null ? continent.hashCode() : 0);
+        result = 31 * result + (countryContinentId != null ? countryContinentId.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "countryByCityCountryId")
+    public Collection<City> getCitiesByCountryId()
+    {
+        return citiesByCountryId;
+    }
+
+    public void setCitiesByCountryId(final Collection<City> citiesByCountryId)
+    {
+        this.citiesByCountryId = citiesByCountryId;
+    }
+
+    @OneToMany(mappedBy = "countryByCompanyCountryId")
+    public Collection<Company> getCompaniesByCountryId()
+    {
+        return companiesByCountryId;
+    }
+
+    public void setCompaniesByCountryId(final Collection<Company> companiesByCountryId)
+    {
+        this.companiesByCountryId = companiesByCountryId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "country_continent_id", referencedColumnName = "continent_id")
+    public Continent getContinentByCountryContinentId()
+    {
+        return continentByCountryContinentId;
+    }
+
+    public void setContinentByCountryContinentId(final Continent continentByCountryContinentId)
+    {
+        this.continentByCountryContinentId = continentByCountryContinentId;
+    }
+
+    @OneToMany(mappedBy = "countryByMessageCountryId")
+    public Collection<Message> getMessagesByCountryId()
+    {
+        return messagesByCountryId;
+    }
+
+    public void setMessagesByCountryId(final Collection<Message> messagesByCountryId)
+    {
+        this.messagesByCountryId = messagesByCountryId;
     }
 }

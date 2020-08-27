@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -16,6 +18,8 @@ public class Likes
     private long likesPersonId;
     private long likesMessageId;
     private Date likesCreationDate;
+    private Person personByLikesPersonId;
+    private Message messageByLikesMessageId;
 
     @Id
     @Column(name = "likes_person_id")
@@ -90,5 +94,29 @@ public class Likes
         result = 31 * result + (int) (likesMessageId ^ (likesMessageId >>> 32));
         result = 31 * result + (likesCreationDate != null ? likesCreationDate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "likes_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByLikesPersonId()
+    {
+        return personByLikesPersonId;
+    }
+
+    public void setPersonByLikesPersonId(final Person personByLikesPersonId)
+    {
+        this.personByLikesPersonId = personByLikesPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "likes_message_id", referencedColumnName = "message_id", nullable = false, insertable = false, updatable = false)
+    public Message getMessageByLikesMessageId()
+    {
+        return messageByLikesMessageId;
+    }
+
+    public void setMessageByLikesMessageId(final Message messageByLikesMessageId)
+    {
+        this.messageByLikesMessageId = messageByLikesMessageId;
     }
 }

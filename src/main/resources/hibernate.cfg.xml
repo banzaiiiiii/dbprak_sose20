@@ -21,43 +21,32 @@
             rubikscube
         </property>
 
-        <property name="show_sql">true</property>
-
-        <!-- List of XML mapping files -->
-        <mapping resource = "City.hbm.xml"/>
-        <mapping resource = "Comment.hbm.xml"/>
-        <mapping resource = "Company.hbm.xml"/>
-        <mapping resource = "Continent.hbm.xml"/>
-        <mapping resource = "Country.hbm.xml"/>
-        <mapping resource = "Forum.hbm.xml"/>
+        <mapping class="com.hibernate.pojos.City"/>
+        <mapping class="com.hibernate.pojos.Comment"/>
+        <mapping class="com.hibernate.pojos.Company"/>
+        <mapping class="com.hibernate.pojos.Continent"/>
+        <mapping class="com.hibernate.pojos.Country"/>
+        <mapping class="com.hibernate.pojos.Forum"/>
+        <mapping class="com.hibernate.pojos.ForumHasTag"/>
+        <mapping class="com.hibernate.pojos.HasInterest"/>
+        <mapping class="com.hibernate.pojos.HasMember"/>
+        <mapping class="com.hibernate.pojos.HasType"/>
+        <mapping class="com.hibernate.pojos.IsSubclassOf"/>
+        <mapping class="com.hibernate.pojos.Knows"/>
+        <mapping class="com.hibernate.pojos.Likes"/>
+        <mapping class="com.hibernate.pojos.Message"/>
+        <mapping class="com.hibernate.pojos.MessageHasTag"/>
+        <mapping class="com.hibernate.pojos.Organisation"/>
+        <mapping class="com.hibernate.pojos.Person"/>
+        <mapping class="com.hibernate.pojos.Place"/>
+        <mapping class="com.hibernate.pojos.Post"/>
+        <mapping class="com.hibernate.pojos.StudyAt"/>
+        <mapping class="com.hibernate.pojos.Tag"/>
+        <mapping class="com.hibernate.pojos.TagClass"/>
+        <mapping class="com.hibernate.pojos.University"/>
+        <mapping class="com.hibernate.pojos.WorkAt"/>
         <!--
-        <mapping resource = "ForumHasTag.hbm.xml"/>
-        <mapping resource = "HasInterest.hbm.xml"/>
-        <mapping resource = "HasMember.hbm.xml"/>
-        <mapping resource = "HasType.hbm.xml"/>
-        <mapping resource = "IsSubclassOf.hbm.xml"/>
-        <mapping resource = "Knows.hbm.xml"/>
-        <mapping resource = "Likes.hbm.xml"/>
-        -->
-        <mapping resource = "Message.hbm.xml"/>
-        <!--
-        <mapping resource = "MessageHasTag.hbm.xml"/>
-        -->
-        <mapping resource = "Organisation.hbm.xml"/>
-        <mapping resource = "Person.hbm.xml"/>
-        <!--
-        <mapping resource = "PkpSymmetric.hbm.xml"/>
-        -->
-        <mapping resource = "Place.hbm.xml"/>
-        <mapping resource = "Post.hbm.xml"/>
-        <!--
-        <mapping resource = "StudyAt.hbm.xml"/>
-        -->
-        <mapping resource = "Tag.hbm.xml"/>
-        <mapping resource = "TagClass.hbm.xml"/>
-        <mapping resource = "University.hbm.xml"/>
-        <!--
-        <mapping resource = "WorkAt.hbm.xml"/>
+        <mapping class="com.hibernate.pojos.PkpSymmetric"/>
         -->
 
     </session-factory>

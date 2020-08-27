@@ -1,9 +1,14 @@
 package com.hibernate.pojos;
 
+import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -14,6 +19,9 @@ public class University extends Organisation
     private long universityId;
     private Long universityOrganisationId;
     private Long universityCityId;
+    private Collection<StudyAt> studyAtsByUniversityId;
+    private Organisation organisationByUniversityOrganisationId;
+    private City cityByUniversityCityId;
 
     @Id
     @Column(name = "university_id")
@@ -37,18 +45,6 @@ public class University extends Organisation
     public void setUniversityOrganisationId(final Long universityOrganisationId)
     {
         this.universityOrganisationId = universityOrganisationId;
-    }
-
-    @Basic
-    @Column(name = "university_city_id")
-    public Long getUniversityCityId()
-    {
-        return universityCityId;
-    }
-
-    public void setUniversityCityId(final Long universityCityId)
-    {
-        this.universityCityId = universityCityId;
     }
 
     @Override
@@ -90,5 +86,28 @@ public class University extends Organisation
         result = 31 * result + (universityOrganisationId != null ? universityOrganisationId.hashCode() : 0);
         result = 31 * result + (universityCityId != null ? universityCityId.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "universityByStudyAtUniversityId")
+    public Collection<StudyAt> getStudyAtsByUniversityId()
+    {
+        return studyAtsByUniversityId;
+    }
+
+    public void setStudyAtsByUniversityId(final Collection<StudyAt> studyAtsByUniversityId)
+    {
+        this.studyAtsByUniversityId = studyAtsByUniversityId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "university_city_id", referencedColumnName = "city_id")
+    public City getCityByUniversityCityId()
+    {
+        return cityByUniversityCityId;
+    }
+
+    public void setCityByUniversityCityId(final City cityByUniversityCityId)
+    {
+        this.cityByUniversityCityId = cityByUniversityCityId;
     }
 }

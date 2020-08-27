@@ -4,6 +4,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -12,6 +14,8 @@ public class Comment
     private long commentId;
     private Long commentMessageId;
     private Long commentCommentedMessageId;
+    private Message messageByCommentMessageId;
+    private Message messageByCommentCommentedMessageId;
 
     @Id
     @Column(name = "comment_id")
@@ -23,30 +27,6 @@ public class Comment
     public void setCommentId(final long commentId)
     {
         this.commentId = commentId;
-    }
-
-    @Basic
-    @Column(name = "comment_message_id")
-    public Long getCommentMessageId()
-    {
-        return commentMessageId;
-    }
-
-    public void setCommentMessageId(final Long commentMessageId)
-    {
-        this.commentMessageId = commentMessageId;
-    }
-
-    @Basic
-    @Column(name = "comment_commented_message_id")
-    public Long getCommentCommentedMessageId()
-    {
-        return commentCommentedMessageId;
-    }
-
-    public void setCommentCommentedMessageId(final Long commentCommentedMessageId)
-    {
-        this.commentCommentedMessageId = commentCommentedMessageId;
     }
 
     @Override
@@ -88,5 +68,29 @@ public class Comment
         result = 31 * result + (commentMessageId != null ? commentMessageId.hashCode() : 0);
         result = 31 * result + (commentCommentedMessageId != null ? commentCommentedMessageId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "comment_message_id", referencedColumnName = "message_id")
+    public Message getMessageByCommentMessageId()
+    {
+        return messageByCommentMessageId;
+    }
+
+    public void setMessageByCommentMessageId(final Message messageByCommentMessageId)
+    {
+        this.messageByCommentMessageId = messageByCommentMessageId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "comment_commented_message_id", referencedColumnName = "message_id")
+    public Message getMessageByCommentCommentedMessageId()
+    {
+        return messageByCommentCommentedMessageId;
+    }
+
+    public void setMessageByCommentCommentedMessageId(final Message messageByCommentCommentedMessageId)
+    {
+        this.messageByCommentCommentedMessageId = messageByCommentCommentedMessageId;
     }
 }

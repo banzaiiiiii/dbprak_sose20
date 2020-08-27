@@ -1,11 +1,15 @@
 package com.hibernate.pojos;
 
 import java.sql.Date;
+import java.util.Collection;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -19,6 +23,13 @@ public class Message
     private String messageLocationIp;
     private String messageContent;
     private int messageLength;
+    private Collection<Comment> commentsByMessageId;
+    private Collection<Comment> commentsByMessageId_0;
+    private Collection<Likes> likesByMessageId;
+    private Person personByMessagePersonId;
+    private Country countryByMessageCountryId;
+    private Collection<MessageHasTag> messageHasTagsByMessageId;
+    private Collection<Post> postsByMessageId;
 
     @Id
     @Column(name = "message_id")
@@ -30,30 +41,6 @@ public class Message
     public void setMessageId(final long messageId)
     {
         this.messageId = messageId;
-    }
-
-    @Basic
-    @Column(name = "message_person_id")
-    public Long getMessagePersonId()
-    {
-        return messagePersonId;
-    }
-
-    public void setMessagePersonId(final Long messagePersonId)
-    {
-        this.messagePersonId = messagePersonId;
-    }
-
-    @Basic
-    @Column(name = "message_country_id")
-    public Long getMessageCountryId()
-    {
-        return messageCountryId;
-    }
-
-    public void setMessageCountryId(final Long messageCountryId)
-    {
-        this.messageCountryId = messageCountryId;
     }
 
     @Basic
@@ -178,5 +165,84 @@ public class Message
         result = 31 * result + (messageContent != null ? messageContent.hashCode() : 0);
         result = 31 * result + messageLength;
         return result;
+    }
+
+    @OneToMany(mappedBy = "messageByCommentMessageId")
+    public Collection<Comment> getCommentsByMessageId()
+    {
+        return commentsByMessageId;
+    }
+
+    public void setCommentsByMessageId(final Collection<Comment> commentsByMessageId)
+    {
+        this.commentsByMessageId = commentsByMessageId;
+    }
+
+    @OneToMany(mappedBy = "messageByCommentCommentedMessageId")
+    public Collection<Comment> getCommentsByMessageId_0()
+    {
+        return commentsByMessageId_0;
+    }
+
+    public void setCommentsByMessageId_0(final Collection<Comment> commentsByMessageId_0)
+    {
+        this.commentsByMessageId_0 = commentsByMessageId_0;
+    }
+
+    @OneToMany(mappedBy = "messageByLikesMessageId")
+    public Collection<Likes> getLikesByMessageId()
+    {
+        return likesByMessageId;
+    }
+
+    public void setLikesByMessageId(final Collection<Likes> likesByMessageId)
+    {
+        this.likesByMessageId = likesByMessageId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "message_person_id", referencedColumnName = "person_id")
+    public Person getPersonByMessagePersonId()
+    {
+        return personByMessagePersonId;
+    }
+
+    public void setPersonByMessagePersonId(final Person personByMessagePersonId)
+    {
+        this.personByMessagePersonId = personByMessagePersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "message_country_id", referencedColumnName = "country_id")
+    public Country getCountryByMessageCountryId()
+    {
+        return countryByMessageCountryId;
+    }
+
+    public void setCountryByMessageCountryId(final Country countryByMessageCountryId)
+    {
+        this.countryByMessageCountryId = countryByMessageCountryId;
+    }
+
+    @OneToMany(mappedBy = "messageByMessageHasTagMessageId")
+    public Collection<MessageHasTag> getMessageHasTagsByMessageId()
+    {
+        return messageHasTagsByMessageId;
+    }
+
+    public void setMessageHasTagsByMessageId(final Collection<MessageHasTag> messageHasTagsByMessageId)
+    {
+        this.messageHasTagsByMessageId = messageHasTagsByMessageId;
+    }
+
+    @OneToMany(mappedBy = "messageByPostMessageId")
+    public Collection<Post> getPostsByMessageId()
+    {
+        return postsByMessageId;
+    }
+
+    public void setPostsByMessageId(final Collection<Post> postsByMessageId)
+    {
+        this.postsByMessageId = postsByMessageId;
     }
 }

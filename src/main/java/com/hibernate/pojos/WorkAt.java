@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -15,6 +17,8 @@ public class WorkAt
     private long workAtPersonId;
     private long workAtCompanyId;
     private int workAtWorkFrom;
+    private Person personByWorkAtPersonId;
+    private Company companyByWorkAtCompanyId;
 
     @Id
     @Column(name = "work_at_person_id")
@@ -89,5 +93,29 @@ public class WorkAt
         result = 31 * result + (int) (workAtCompanyId ^ (workAtCompanyId >>> 32));
         result = 31 * result + workAtWorkFrom;
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "work_at_person_id", referencedColumnName = "person_id", nullable = false, insertable = false, updatable = false)
+    public Person getPersonByWorkAtPersonId()
+    {
+        return personByWorkAtPersonId;
+    }
+
+    public void setPersonByWorkAtPersonId(final Person personByWorkAtPersonId)
+    {
+        this.personByWorkAtPersonId = personByWorkAtPersonId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "work_at_company_id", referencedColumnName = "company_id", nullable = false, insertable = false, updatable = false)
+    public Company getCompanyByWorkAtCompanyId()
+    {
+        return companyByWorkAtCompanyId;
+    }
+
+    public void setCompanyByWorkAtCompanyId(final Company companyByWorkAtCompanyId)
+    {
+        this.companyByWorkAtCompanyId = companyByWorkAtCompanyId;
     }
 }

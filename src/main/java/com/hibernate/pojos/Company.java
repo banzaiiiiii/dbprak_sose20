@@ -1,9 +1,14 @@
 package com.hibernate.pojos;
 
+import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -14,6 +19,9 @@ public class Company extends Organisation
     private long companyId;
     private Long companyOrganisationId;
     private Long companyCountryId;
+    private Organisation organisationByCompanyOrganisationId;
+    private Country countryByCompanyCountryId;
+    private Collection<WorkAt> workAtsByCompanyId;
 
     @Id
     @Column(name = "company_id")
@@ -37,18 +45,6 @@ public class Company extends Organisation
     public void setCompanyOrganisationId(final Long companyOrganisationId)
     {
         this.companyOrganisationId = companyOrganisationId;
-    }
-
-    @Basic
-    @Column(name = "company_country_id")
-    public Long getCompanyCountryId()
-    {
-        return companyCountryId;
-    }
-
-    public void setCompanyCountryId(final Long companyCountryId)
-    {
-        this.companyCountryId = companyCountryId;
     }
 
     @Override
@@ -88,5 +84,28 @@ public class Company extends Organisation
         result = 31 * result + (companyOrganisationId != null ? companyOrganisationId.hashCode() : 0);
         result = 31 * result + (companyCountryId != null ? companyCountryId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "company_country_id", referencedColumnName = "country_id")
+    public Country getCountryByCompanyCountryId()
+    {
+        return countryByCompanyCountryId;
+    }
+
+    public void setCountryByCompanyCountryId(final Country countryByCompanyCountryId)
+    {
+        this.countryByCompanyCountryId = countryByCompanyCountryId;
+    }
+
+    @OneToMany(mappedBy = "companyByWorkAtCompanyId")
+    public Collection<WorkAt> getWorkAtsByCompanyId()
+    {
+        return workAtsByCompanyId;
+    }
+
+    public void setWorkAtsByCompanyId(final Collection<WorkAt> workAtsByCompanyId)
+    {
+        this.workAtsByCompanyId = workAtsByCompanyId;
     }
 }
