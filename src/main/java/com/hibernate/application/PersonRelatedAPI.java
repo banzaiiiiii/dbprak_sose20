@@ -47,11 +47,11 @@ public class PersonRelatedAPI
             for (Iterator iterator = persons.iterator(); iterator.hasNext(); )
             {
                 Person person = (Person) iterator.next();
-                System.out.print("First Name: " + person.getPersonFirstName());
-                System.out.print("  Last Name: " + person.getPersonLastName());
-                System.out.print("  Gender: " + person.getPersonGender());
-                System.out.print("  Birthday: " + person.getPersonBirthday());
-                System.out.print("  City: " + person.getCityByPersonCityId().getPlaceName());
+                System.out.println("First Name: " + person.getPersonFirstName());
+                System.out.println("Last Name: " + person.getPersonLastName());
+                System.out.println("Gender: " + person.getPersonGender());
+                System.out.println("Birthday: " + person.getPersonBirthday());
+                System.out.println("City: " + person.getCityByPersonCityId().getPlaceName());
             }
             tx.commit();
         }

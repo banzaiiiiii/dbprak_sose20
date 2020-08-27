@@ -38,6 +38,8 @@
         <mapping class="com.hibernate.pojos.MessageHasTag"/>
         <mapping class="com.hibernate.pojos.Organisation"/>
         <mapping class="com.hibernate.pojos.Person"/>
+        <mapping class="com.hibernate.pojos.PersonEmail"/>
+        <mapping class="com.hibernate.pojos.PersonSpeaks"/>
         <mapping class="com.hibernate.pojos.Place"/>
         <mapping class="com.hibernate.pojos.Post"/>
         <mapping class="com.hibernate.pojos.StudyAt"/>

@@ -23,7 +23,6 @@ public class Person
     private String personLastName;
     private String personGender;
     private Date personBirthday;
-    private String personEmail;
     private String personSpeaks;
     private String personBrowserUsed;
     private String personLocationIp;
@@ -37,6 +36,8 @@ public class Person
     private City cityByPersonCityId;
     private Collection<StudyAt> studyAtsByPersonId;
     private Collection<WorkAt> workAtsByPersonId;
+    private Collection<PersonEmail> personEmails;
+    private Collection<PersonSpeaks> languages;
 
     @Id
     @Column(name = "person_id")
@@ -111,30 +112,6 @@ public class Person
     }
 
     @Basic
-    @Column(name = "person_email")
-    public String getPersonEmail()
-    {
-        return personEmail;
-    }
-
-    public void setPersonEmail(final String personEmail)
-    {
-        this.personEmail = personEmail;
-    }
-
-    @Basic
-    @Column(name = "person_speaks")
-    public String getPersonSpeaks()
-    {
-        return personSpeaks;
-    }
-
-    public void setPersonSpeaks(final String personSpeaks)
-    {
-        this.personSpeaks = personSpeaks;
-    }
-
-    @Basic
     @Column(name = "person_browser_used")
     public String getPersonBrowserUsed()
     {
@@ -200,7 +177,7 @@ public class Person
         {
             return false;
         }
-        if (personEmail != null ? !personEmail.equals(person.personEmail) : person.personEmail != null)
+        if (personEmails != null ? !personEmails.equals(person.personEmails) : person.personEmails != null)
         {
             return false;
         }
@@ -230,7 +207,7 @@ public class Person
         result = 31 * result + (personLastName != null ? personLastName.hashCode() : 0);
         result = 31 * result + (personGender != null ? personGender.hashCode() : 0);
         result = 31 * result + (personBirthday != null ? personBirthday.hashCode() : 0);
-        result = 31 * result + (personEmail != null ? personEmail.hashCode() : 0);
+        result = 31 * result + (personEmails != null ? personEmails.hashCode() : 0);
         result = 31 * result + (personSpeaks != null ? personSpeaks.hashCode() : 0);
         result = 31 * result + (personBrowserUsed != null ? personBrowserUsed.hashCode() : 0);
         result = 31 * result + (personLocationIp != null ? personLocationIp.hashCode() : 0);
@@ -346,5 +323,29 @@ public class Person
     public void setWorkAtsByPersonId(final Collection<WorkAt> workAtsByPersonId)
     {
         this.workAtsByPersonId = workAtsByPersonId;
+    }
+
+
+    @OneToMany(mappedBy = "personByEmailPersonId")
+    public Collection<PersonEmail> getEmailsByPersonId()
+    {
+        return personEmails;
+    }
+
+    public void setEmailsByPersonId(final Collection<PersonEmail> personEmails)
+    {
+        this.personEmails = personEmails;
+    }
+
+
+    @OneToMany(mappedBy = "personByLanguagePersonId")
+    public Collection<PersonSpeaks> getLanguagesByPersonId()
+    {
+        return languages;
+    }
+
+    public void setLanguagesByPersonId(final Collection<PersonSpeaks> languages)
+    {
+        this.languages = languages;
     }
 }
