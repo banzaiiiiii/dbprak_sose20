@@ -31,11 +31,11 @@ public class PersonRelatedAPI
         PersonRelatedAPI prapi = new PersonRelatedAPI();
 
         /* List down all the employees */
-        prapi.getProfile();
+        prapi.getProfile(12094627905604L);
     }
 
     /* Ausgabe des Profils einer Person, d.h. alle personenbezogenen Informationen (Name, Geschlecht, Wohnort …) */
-    public void getProfile()
+    public void getProfile(final long personId)
     {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -43,16 +43,14 @@ public class PersonRelatedAPI
         try
         {
             tx = session.beginTransaction();
-            List persons = session.createQuery("FROM Person").list();
-            for (Iterator iterator = persons.iterator(); iterator.hasNext(); )
-            {
-                Person person = (Person) iterator.next();
-                System.out.println("First Name: " + person.getPersonFirstName());
-                System.out.println("Last Name: " + person.getPersonLastName());
-                System.out.println("Gender: " + person.getPersonGender());
-                System.out.println("Birthday: " + person.getPersonBirthday());
-                System.out.println("City: " + person.getCityByPersonCityId().getPlaceName());
-            }
+            Person person = (Person) session.createQuery("FROM Person P WHERE P.personId=" + personId).list().get(0);
+
+            System.out.println("First Name: " + person.getPersonFirstName());
+            System.out.println("Last Name: " + person.getPersonLastName());
+            System.out.println("Gender: " + person.getPersonGender());
+            System.out.println("Birthday: " + person.getPersonBirthday());
+            System.out.println("City: " + person.getCityByPersonCityId().getPlaceName());
+
             tx.commit();
         }
         catch (HibernateException e)
