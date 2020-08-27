@@ -6,7 +6,6 @@
 
     <class name="com.hibernate.pojos.Person" table="person" schema="public" catalog="socialnetwork">
         <id name="personId" column="person_id"/>
-        <property name="personCityId" column="person_city_id"/>
         <property name="personCreationDate" column="person_creation_date"/>
         <property name="personFirstName" column="person_first_name"/>
         <property name="personLastName" column="person_last_name"/>

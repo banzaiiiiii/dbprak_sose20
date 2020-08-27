@@ -16,7 +16,7 @@ public class Message
     private Long messageCountryId;
     private Date messageCreationDate;
     private String messageBrowserUsed;
-    private Object messageLocationIp;
+    private String messageLocationIp;
     private String messageContent;
     private int messageLength;
 
@@ -82,12 +82,12 @@ public class Message
 
     @Basic
     @Column(name = "message_location_ip")
-    public Object getMessageLocationIp()
+    public String getMessageLocationIp()
     {
         return messageLocationIp;
     }
 
-    public void setMessageLocationIp(final Object messageLocationIp)
+    public void setMessageLocationIp(final String messageLocationIp)
     {
         this.messageLocationIp = messageLocationIp;
     }

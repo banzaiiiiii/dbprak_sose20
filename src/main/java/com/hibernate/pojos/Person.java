@@ -2,18 +2,24 @@ package com.hibernate.pojos;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
 public class Person
 {
     private long personId;
-    private long personCityId;
+    private City city;
     private Timestamp personCreationDate;
     private String personFirstName;
     private String personLastName;
@@ -22,7 +28,7 @@ public class Person
     private String personEmail;
     private String personSpeaks;
     private String personBrowserUsed;
-    private Object personLocationIp;
+    private String personLocationIp;
 
     @Id
     @Column(name = "person_id")
@@ -36,16 +42,16 @@ public class Person
         this.personId = personId;
     }
 
-    @Basic
-    @Column(name = "person_city_id")
-    public long getPersonCityId()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_city_id", referencedColumnName = "city_id")
+    public City getCity()
     {
-        return personCityId;
+        return city;
     }
 
-    public void setPersonCityId(final long personCityId)
+    public void setCity(final City city)
     {
-        this.personCityId = personCityId;
+        this.city = city;
     }
 
     @Basic
@@ -146,12 +152,12 @@ public class Person
 
     @Basic
     @Column(name = "person_location_ip")
-    public Object getPersonLocationIp()
+    public String getPersonLocationIp()
     {
         return personLocationIp;
     }
 
-    public void setPersonLocationIp(final Object personLocationIp)
+    public void setPersonLocationIp(final String personLocationIp)
     {
         this.personLocationIp = personLocationIp;
     }
@@ -174,7 +180,7 @@ public class Person
         {
             return false;
         }
-        if (personCityId != person.personCityId)
+        if (city != person.city)
         {
             return false;
         }
@@ -222,7 +228,7 @@ public class Person
     public int hashCode()
     {
         int result = (int) (personId ^ (personId >>> 32));
-        result = 31 * result + (int) (personCityId ^ (personCityId >>> 32));
+        result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (personCreationDate != null ? personCreationDate.hashCode() : 0);
         result = 31 * result + (personFirstName != null ? personFirstName.hashCode() : 0);
         result = 31 * result + (personLastName != null ? personLastName.hashCode() : 0);

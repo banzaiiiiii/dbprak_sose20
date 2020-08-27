@@ -1,9 +1,13 @@
 package com.hibernate.pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -13,6 +17,18 @@ public class Continent extends Place
 {
     private long continentId;
     private Long continentPlaceId;
+    private List<Country> countries = new ArrayList<>();
+
+    @OneToMany(mappedBy = "continent")
+    public List<Country> getCountries()
+    {
+        return countries;
+    }
+
+    public void setCountries(final List<Country> countries)
+    {
+        this.countries = countries;
+    }
 
     @Id
     @Column(name = "continent_id")

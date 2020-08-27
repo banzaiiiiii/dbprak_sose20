@@ -7,6 +7,5 @@
     <class name="com.hibernate.pojos.City" table="city" schema="public" catalog="socialnetwork">
         <id name="cityId" column="city_id"/>
         <property name="cityPlaceId" column="city_place_id"/>
-        <property name="cityCountryId" column="city_country_id"/>
     </class>
 </hibernate-mapping>

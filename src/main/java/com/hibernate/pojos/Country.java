@@ -1,9 +1,16 @@
 package com.hibernate.pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -13,7 +20,19 @@ public class Country extends Place
 {
     private long countryId;
     private Long countryPlaceId;
-    private Long countryContinentId;
+    private Continent continent;
+    private List<City> cities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "country")
+    public List<City> getCities()
+    {
+        return cities;
+    }
+
+    public void setCities(final List<City> cities)
+    {
+        this.cities = cities;
+    }
 
     @Id
     @Column(name = "country_id")
@@ -39,16 +58,16 @@ public class Country extends Place
         this.countryPlaceId = countryPlaceId;
     }
 
-    @Basic
-    @Column(name = "country_continent_id")
-    public Long getCountryContinentId()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_continent_id", referencedColumnName = "continent_id")
+    public Continent getContinent()
     {
-        return countryContinentId;
+        return continent;
     }
 
-    public void setCountryContinentId(final Long countryContinentId)
+    public void setContinent(final Continent continent)
     {
-        this.countryContinentId = countryContinentId;
+        this.continent = continent;
     }
 
     @Override
@@ -73,7 +92,7 @@ public class Country extends Place
         {
             return false;
         }
-        if (countryContinentId != null ? !countryContinentId.equals(country.countryContinentId) : country.countryContinentId != null)
+        if (continent != null ? !continent.equals(country.continent) : country.continent != null)
         {
             return false;
         }
@@ -86,7 +105,7 @@ public class Country extends Place
     {
         int result = (int) (countryId ^ (countryId >>> 32));
         result = 31 * result + (countryPlaceId != null ? countryPlaceId.hashCode() : 0);
-        result = 31 * result + (countryContinentId != null ? countryContinentId.hashCode() : 0);
+        result = 31 * result + (continent != null ? continent.hashCode() : 0);
         return result;
     }
 }

@@ -9,7 +9,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "university_organisation_id")
-public class University
+public class University extends Organisation
 {
     private long universityId;
     private Long universityOrganisationId;

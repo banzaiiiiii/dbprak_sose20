@@ -10,7 +10,7 @@ public class Main {
             Connection con = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/socialnetwork",
                     "postgres",
-                    "1234"
+                    "rubikscube"
             );
             Filler filler = new Filler(con);
 

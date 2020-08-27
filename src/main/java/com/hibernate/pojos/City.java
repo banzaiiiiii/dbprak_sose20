@@ -3,7 +3,11 @@ package com.hibernate.pojos;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -13,7 +17,20 @@ public class City extends Place
 {
     private long cityId;
     private Long cityPlaceId;
-    private Long cityCountryId;
+    private Country country;
+
+    @OneToMany(mappedBy = "city")
+    public Person getPersonen()
+    {
+        return personen;
+    }
+
+    public void setPersonen(final Person personen)
+    {
+        this.personen = personen;
+    }
+
+    private Person personen;
 
     @Id
     @Column(name = "city_id")
@@ -39,16 +56,17 @@ public class City extends Place
         this.cityPlaceId = cityPlaceId;
     }
 
-    @Basic
-    @Column(name = "city_country_id")
-    public Long getCityCountryId()
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_country_id", referencedColumnName = "country_id")
+    public Country getCountry()
     {
-        return cityCountryId;
+        return country;
     }
 
-    public void setCityCountryId(final Long cityCountryId)
+    public void setCountry(final Country country)
     {
-        this.cityCountryId = cityCountryId;
+        this.country = country;
     }
 
     @Override
@@ -73,7 +91,7 @@ public class City extends Place
         {
             return false;
         }
-        if (cityCountryId != null ? !cityCountryId.equals(city.cityCountryId) : city.cityCountryId != null)
+        if (country != null ? !country.equals(city.country) : city.country != null)
         {
             return false;
         }
@@ -86,7 +104,7 @@ public class City extends Place
     {
         int result = (int) (cityId ^ (cityId >>> 32));
         result = 31 * result + (cityPlaceId != null ? cityPlaceId.hashCode() : 0);
-        result = 31 * result + (cityCountryId != null ? cityCountryId.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
     }
 }
