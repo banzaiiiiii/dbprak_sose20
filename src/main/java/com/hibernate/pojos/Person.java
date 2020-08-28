@@ -2,7 +2,9 @@ package com.hibernate.pojos;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -347,5 +349,14 @@ public class Person
     public void setLanguagesByPersonId(final Collection<PersonSpeaks> languages)
     {
         this.languages = languages;
+    }
+
+    // custom methods:
+
+    public List<Tag> retrieveTags()
+    {
+        List<Tag> interests = new ArrayList<>();
+        getHasInterestsByPersonId().forEach(e -> interests.add(e.getTagByHasInterestTagId()));
+        return interests;
     }
 }
