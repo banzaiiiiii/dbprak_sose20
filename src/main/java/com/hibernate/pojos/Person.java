@@ -359,4 +359,13 @@ public class Person
         getHasInterestsByPersonId().forEach(e -> interests.add(e.getTagByHasInterestTagId()));
         return interests;
     }
+
+    public List<Person> retrieveBiDirFriends()
+    {
+        List<Person> bidirFriends = new ArrayList<>();
+        getKnowsByPersonId().forEach(e -> bidirFriends.add(e.getPersonByKnowsOtherPersonId()));
+        getKnowsByPersonId_0().forEach(e -> bidirFriends.add(e.getPersonByKnowsPersonId()));
+
+        return bidirFriends;
+    }
 }
