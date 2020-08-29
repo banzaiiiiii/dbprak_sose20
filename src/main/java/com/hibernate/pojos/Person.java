@@ -360,6 +360,20 @@ public class Person
         return interests;
     }
 
+    public List<Company> retrieveCompanies()
+    {
+        List<Company> companies = new ArrayList<>();
+        getWorkAtsByPersonId().forEach(e -> companies.add(e.getCompanyByWorkAtCompanyId()));
+        return companies;
+    }
+
+    public List<University> retrieveUniversities()
+    {
+        List<University> universities = new ArrayList<>();
+        getStudyAtsByPersonId().forEach(e -> universities.add(e.getUniversityByStudyAtUniversityId()));
+        return universities;
+    }
+
     public List<Person> retrieveBiDirFriends()
     {
         List<Person> bidirFriends = new ArrayList<>();
