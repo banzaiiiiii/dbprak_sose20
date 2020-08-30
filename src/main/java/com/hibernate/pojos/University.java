@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,7 +22,6 @@ public class University extends Organisation
     private Organisation organisationByUniversityOrganisationId;
     private City cityByUniversityCityId;
 
-    @Id
     @Column(name = "university_id")
     public long getUniversityId()
     {
@@ -36,7 +34,7 @@ public class University extends Organisation
     }
 
     @Basic
-    @Column(name = "university_organisation_id")
+    @Column(name = "university_organisation_id", insertable = false, updatable = false)
     public Long getUniversityOrganisationId()
     {
         return universityOrganisationId;

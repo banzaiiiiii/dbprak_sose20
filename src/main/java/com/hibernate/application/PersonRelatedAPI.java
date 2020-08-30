@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import com.hibernate.pojos.Person;
 
@@ -147,6 +148,8 @@ public class PersonRelatedAPI
 
     private void getShorthestFriendshipPath(final long thisPersonId, final long otherPersonId, Session session)
     {
+        Query query = session.createSQLQuery("SELECT * FROM pkp_SP()").addEntity(Person.class);
+        List<Person> allFoos = query.list();
 
     }
 

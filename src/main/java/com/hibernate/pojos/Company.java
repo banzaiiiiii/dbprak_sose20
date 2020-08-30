@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,7 +22,6 @@ public class Company extends Organisation
     private Country countryByCompanyCountryId;
     private Collection<WorkAt> workAtsByCompanyId;
 
-    @Id
     @Column(name = "company_id")
     public long getCompanyId()
     {
@@ -36,7 +34,7 @@ public class Company extends Organisation
     }
 
     @Basic
-    @Column(name = "company_organisation_id")
+    @Column(name = "company_organisation_id", insertable = false, updatable = false)
     public Long getCompanyOrganisationId()
     {
         return companyOrganisationId;

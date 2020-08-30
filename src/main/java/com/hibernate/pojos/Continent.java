@@ -5,9 +5,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -20,7 +17,6 @@ public class Continent extends Place
     private Long continentPlaceId;
     private Collection<Country> countriesByContinentId;
 
-    @Id
     @Column(name = "continent_id")
     public long getContinentId()
     {
@@ -33,7 +29,7 @@ public class Continent extends Place
     }
 
     @Basic
-    @Column(name = "continent_place_id")
+    @Column(name = "continent_place_id", insertable = false, updatable = false)
     public Long getContinentPlaceId()
     {
         return continentPlaceId;

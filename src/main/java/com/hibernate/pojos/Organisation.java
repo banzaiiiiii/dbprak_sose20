@@ -1,6 +1,6 @@
 package com.hibernate.pojos;
 
-import java.util.Collection;
+import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -8,17 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 
+
+@Entity
 // https://stackoverflow.com/questions/190296/how-do-you-effectively-model-inheritance-in-a-database
 // https://www.baeldung.com/hibernate-inheritance
 // Since we use Table-Per-Type (TPT) inheritance in our database, we have to use 'InheritanceType.JOINED'
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Organisation
+public abstract class Organisation implements Serializable
 {
     private long organisationId;
     private String organisationName;
 
+    @Id
     @Column(name = "organisation_id")
     public long getOrganisationId()
     {

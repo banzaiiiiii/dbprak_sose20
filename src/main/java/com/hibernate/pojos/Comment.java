@@ -1,5 +1,8 @@
 package com.hibernate.pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -92,5 +95,9 @@ public class Comment
     public void setMessageByCommentCommentedMessageId(final Message messageByCommentCommentedMessageId)
     {
         this.messageByCommentCommentedMessageId = messageByCommentCommentedMessageId;
+    }
+
+    public int countLikes(){
+        return getMessageByCommentMessageId().getLikesByMessageId().size();
     }
 }

@@ -1,6 +1,8 @@
 package com.hibernate.pojos;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -109,5 +111,45 @@ public class TagClass
     public void setIsSubclassOfsByTagClassId_0(final Collection<IsSubclassOf> isSubclassOfsByTagClassId_0)
     {
         this.isSubclassOfsByTagClassId_0 = isSubclassOfsByTagClassId_0;
+    }
+
+    public List<TagClass> retrieveSubClasses()
+    {
+        List<TagClass> subClasses = new ArrayList<>();
+        getIsSubclassOfsByTagClassId_0().forEach(e -> subClasses.add(e.getTagClassByTagClassId()));
+
+        return subClasses;
+    }
+
+    public List<TagClass> retrieveSuperClasses()
+    {
+        List<TagClass> superClasses = new ArrayList<>();
+        getIsSubclassOfsByTagClassId().forEach(e -> superClasses.add(e.getTagClassByTagSuperclassId()));
+
+        return superClasses;
+    }
+
+    public TagClass retrieveRoot()
+    {
+        if (retrieveSuperClasses().isEmpty())
+        {
+            return this;
+        }
+        else
+        {
+            return retrieveSuperClasses().get(0).retrieveRoot();
+        }
+    }
+
+    public void printTaxonomy(String legacyTaxo)
+    {
+        for (int i = 0; i < this.retrieveSubClasses().size(); i++)
+        {
+            String taxoTail = "." + (i + 1);
+            System.out.println(legacyTaxo + taxoTail + " " + this.retrieveSubClasses().get(i).getTagClassName());
+
+            String taxoHead = legacyTaxo + taxoTail;
+            this.retrieveSubClasses().get(i).printTaxonomy(taxoHead);
+        }
     }
 }

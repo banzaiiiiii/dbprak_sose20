@@ -23,7 +23,6 @@ public class City extends Place
     private Collection<Person> peopleByCityId;
     private Collection<University> universitiesByCityId;
 
-    @Id
     @Column(name = "city_id")
     public long getCityId()
     {
@@ -36,7 +35,7 @@ public class City extends Place
     }
 
     @Basic
-    @Column(name = "city_place_id")
+    @Column(name = "city_place_id", insertable = false, updatable = false)
     public Long getCityPlaceId()
     {
         return cityPlaceId;
