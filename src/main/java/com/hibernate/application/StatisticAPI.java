@@ -2,6 +2,8 @@ package com.hibernate.application;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
@@ -17,10 +19,17 @@ import com.hibernate.pojos.TagClass;
 
 public class StatisticAPI
 {
+    private final String ANSI_GREEN = "\u001B[32m";
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
+    private final String ANSI_PURPLE = "\u001B[35m";
+    private final String ANSI_YELLOW = "\u001B[33m";
+
     private static SessionFactory factory;
 
     public static void main(String[] args)
     {
+        LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE);
         try
         {
             factory = new Configuration().configure().buildSessionFactory();
@@ -90,12 +99,6 @@ public class StatisticAPI
      */
     public void listenToInput()
     {
-        final String ANSI_GREEN = "\u001B[32m";
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_RED = "\u001B[31m";
-        final String ANSI_PURPLE = "\u001B[35m";
-        final String ANSI_YELLOW = "\u001B[33m";
-
         int n = 0;
         boolean input = false;
 
@@ -184,7 +187,7 @@ public class StatisticAPI
             }
             catch (Exception e)
             {
-                System.out.print("Invalid input. Please enter a number!: ");
+                System.out.print(ANSI_RED + "Invalid input. Please enter a number!: " + ANSI_RESET);
             }
         }
         return n;

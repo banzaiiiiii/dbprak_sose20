@@ -380,4 +380,34 @@ public class Person
 
         return bidirFriends;
     }
+
+    public List<University> recommendUnis(){
+        List<University> recommendations = new ArrayList<>();
+        List<Person> friends = this.retrieveBiDirFriends();
+        for (Person friend : friends)
+        {
+            friend.retrieveUniversities().forEach(e -> {
+                if (e.getCityByUniversityCityId() == this.getCityByPersonCityId())
+                {
+                    recommendations.add(e);
+                }
+            });
+        }
+        return recommendations;
+    }
+
+    public List<Company> recommendCompanies(){
+        List<Company> recommendations = new ArrayList<>();
+        List<Person> friends = this.retrieveBiDirFriends();
+        for (Person friend : friends)
+        {
+            friend.retrieveCompanies().forEach(e -> {
+                if (e.getCountryByCompanyCountryId() == this.getCityByPersonCityId().getCountryByCityCountryId())
+                {
+                    recommendations.add(e);
+                }
+            });
+        }
+        return recommendations;
+    }
 }

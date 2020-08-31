@@ -3,6 +3,8 @@ package com.hibernate.application;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
@@ -15,14 +17,22 @@ import com.hibernate.application.dijkstra.Dijkstra;
 import com.hibernate.application.dijkstra.Edge;
 import com.hibernate.application.dijkstra.Vertex;
 import com.hibernate.pojos.Person;
+import com.hibernate.pojos.Tag;
 
 
 public class PersonRelatedAPI
 {
+    private final String ANSI_GREEN = "\u001B[32m";
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
+    private final String ANSI_PURPLE = "\u001B[35m";
+    private final String ANSI_YELLOW = "\u001B[33m";
+
     private static SessionFactory factory;
 
     public static void main(String[] args)
     {
+        LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE);
         try
         {
             factory = new Configuration().configure().buildSessionFactory();
@@ -45,6 +55,8 @@ public class PersonRelatedAPI
         // 2 - 5497558138908
         // 3 - 5497558138908 , 12094627905604
         // 4 - 2199023255611
+        // 5 - 9895604650036 (company) , 13194139533352 (uni)
+        // 6 -
     }
 
     /* Ausgabe des Profils einer Person, d.h. alle personenbezogenen Informationen (Name, Geschlecht, Wohnort …) */
@@ -64,14 +76,23 @@ public class PersonRelatedAPI
     {
         Person person = (Person) session.createQuery("FROM Person P WHERE P.personId=" + personId).list().get(0);
 
+        System.out.println("COMMON INTERESTS:");
         for (Person friend : person.retrieveBiDirFriends())
         {
-            System.out.println("COMMON INTERESTS:");
-            System.out.println("tags: ");
-            ApiUtils.getIntersection(person.retrieveTags(), friend.retrieveTags()).forEach(
-                e -> System.out.println("   tagID: " + e.getTagId()));
+            List<Tag> intersect = ApiUtils.getIntersection(person.retrieveTags(), friend.retrieveTags());
+            if (intersect.isEmpty())
+            {
+                System.out.println("-> No common interests with this friend:");
+            }
+            else
+            {
+                System.out.println("tags: ");
+                intersect.forEach(
+                    e -> System.out.println("   tagID: " + e.getTagId()));
+            }
             System.out.println("First Name: " + friend.getPersonFirstName());
             System.out.println("Last Name: " + friend.getPersonLastName());
+            System.out.println();
         }
     }
 
@@ -81,9 +102,12 @@ public class PersonRelatedAPI
         Person otherPers = (Person) session.createQuery("FROM Person P WHERE P.personId=" + otherPersId).list().get(0);
 
         System.out.println("COMMON FRIENDS:");
-        ApiUtils.getIntersection(thisPers.retrieveBiDirFriends(), otherPers.retrieveBiDirFriends()).forEach(
-            e -> System.out.println("First Name: " + e.getPersonFirstName() + '\n' +
-                "Last Name: " + e.getPersonLastName()));
+        ApiUtils.getIntersection(thisPers.retrieveBiDirFriends(), otherPers.retrieveBiDirFriends()).forEach(e ->
+        {
+            System.out.println("ID: " + e.getPersonId());
+            System.out.println("First Name: " + e.getPersonFirstName() + '\n' + "Last Name: " + e.getPersonLastName() + "\n");
+        });
+
     }
 
     private void getPersonsWithMostCommonInterests(final long personId, Session session)
@@ -120,32 +144,30 @@ public class PersonRelatedAPI
     private void getJobRecommendation(final long personId, Session session)
     {
         Person person = (Person) session.createQuery("FROM Person P WHERE P.personId=" + personId).list().get(0);
-        List<Person> friends = person.retrieveBiDirFriends();
-        if (friends.isEmpty())
+        if (person.retrieveBiDirFriends().isEmpty())
         {
-            System.out.println("This person has not friends!");
+            System.out.println("This person has no friends!");
         }
         else
         {
-            for (Person friend : friends)
+            if (person.recommendUnis().isEmpty())
+            {
+                System.out.println("No uni can be recommended under the current constraints!");
+            }
+            else
             {
                 System.out.println("Uni recommendations:");
-                friend.retrieveUniversities().forEach(e -> {
-                    if (e.getCityByUniversityCityId() == person.getCityByPersonCityId())
-                    {
-                        System.out.println("University ID: " + e.getUniversityId());
-                        System.out.println("University Name: " + e.getOrganisationName());
-                    }
-                });
-
-                System.out.println("Job recommendation:");
-                if (friend.getCityByPersonCityId() == person.getCityByPersonCityId())
-                {
-                    friend.retrieveCompanies().forEach(e -> {
-                        System.out.println("Company ID: " + e.getCompanyId());
-                        System.out.println("Company Name: " + e.getOrganisationName());
-                    });
-                }
+                System.out.println("Uni name: " + person.recommendUnis().get(0).getOrganisationName());
+                System.out.println();
+            }
+            if (person.recommendCompanies().isEmpty())
+            {
+                System.out.println("No company/job can be recommended under the current constraints!");
+            }
+            else
+            {
+                System.out.println("Company/Job recommendations:");
+                System.out.println("Company name: " + person.recommendCompanies().get(0).getOrganisationName());
             }
         }
     }
@@ -157,8 +179,6 @@ public class PersonRelatedAPI
         //Person thisPers = persons.stream().filter(a -> a.getPersonId() == thisPersonId).collect(Collectors.toList()).get(0);
         //Person target = persons.stream().filter(a -> a.getPersonId() == otherPersonId).collect(Collectors.toList()).get(0);
 
-        Person thisPers = (Person) session.createQuery("FROM Person P WHERE P.personId=" + thisPersonId).list().get(0);
-        Person target = (Person) session.createQuery("FROM Person P WHERE P.personId=" + otherPersonId).list().get(0);
         List<Person> all = session.createQuery("FROM Person", Person.class).getResultList();
 
         List<Vertex> vertices = new ArrayList<>();
@@ -181,8 +201,8 @@ public class PersonRelatedAPI
             Edge[] edges = new Edge[myEdges.size()];
             v.adjacencies = myEdges.toArray(edges);
         }
-        Dijkstra.computePaths(vertices.stream().filter(a -> a.name.equals(String.valueOf(thisPers.getPersonId()))).collect(Collectors.toList()).get(0)); // run Dijkstra
-        Vertex targetVertex = vertices.stream().filter(a -> a.name.equals(String.valueOf(target.getPersonId()))).collect(Collectors.toList()).get(0);
+        Dijkstra.computePaths(vertices.stream().filter(a -> a.name.equals(String.valueOf(thisPersonId))).collect(Collectors.toList()).get(0)); // run Dijkstra
+        Vertex targetVertex = vertices.stream().filter(a -> a.name.equals(String.valueOf(otherPersonId))).collect(Collectors.toList()).get(0);
         System.out.println("Distance to " + targetVertex + ": " + targetVertex.minDistance);
         List<Vertex> path = Dijkstra.getShortestPathTo(targetVertex);
         System.out.println("Path: " + path);
@@ -193,12 +213,6 @@ public class PersonRelatedAPI
      */
     public void listenToInput()
     {
-        final String ANSI_GREEN = "\u001B[32m";
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_RED = "\u001B[31m";
-        final String ANSI_PURPLE = "\u001B[35m";
-        final String ANSI_YELLOW = "\u001B[33m";
-
         int n = 0;
         boolean input = false;
 
@@ -244,7 +258,7 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + ": ");
-                    Long personId = validateInput();
+                    Long personId = validateInput(session);
                     getProfile(personId, session);
                     break;
                 }
@@ -252,7 +266,7 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + ": ");
-                    Long personId = validateInput();
+                    Long personId = validateInput(session);
                     getCommonInterestsOfMyFriends(personId, session);
                     break;
                 }
@@ -260,9 +274,9 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the FIRST person: ");
-                    Long thisPersId = validateInput();
+                    Long thisPersId = validateInput(session);
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the SECOND person: ");
-                    Long otherPersId = validateInput();
+                    Long otherPersId = validateInput(session);
                     getCommonFriends(thisPersId, otherPersId, session);
                     break;
                 }
@@ -270,7 +284,7 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + ": ");
-                    Long personId = validateInput();
+                    Long personId = validateInput(session);
                     getPersonsWithMostCommonInterests(personId, session);
                     break;
                 }
@@ -278,7 +292,7 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + ": ");
-                    Long personId = validateInput();
+                    Long personId = validateInput(session);
                     getJobRecommendation(personId, session);
                     break;
                 }
@@ -286,9 +300,9 @@ public class PersonRelatedAPI
                 {
                     // set parameters
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the FIRST person: ");
-                    Long thisPersId = validateInput();
+                    Long thisPersId = validateInput(session);
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the SECOND person: ");
-                    Long otherPersId = validateInput();
+                    Long otherPersId = validateInput(session);
                     getShorthestFriendshipPath(thisPersId, otherPersId, session);
                     break;
                 }
@@ -309,7 +323,7 @@ public class PersonRelatedAPI
         }
     }
 
-    private Long validateInput()
+    private Long validateInput(Session session)
     {
         boolean input = false;
         long n = 0L;
@@ -320,11 +334,17 @@ public class PersonRelatedAPI
             {
                 Scanner sc = new Scanner(System.in);
                 n = sc.nextLong();
+                session.createQuery("FROM Person P WHERE P.personId=" + n).list().get(0); // force IndexOutOfBoundsException to fail here!
                 input = true;
+            }
+            catch (IndexOutOfBoundsException iob)
+            {
+                System.out.println(ANSI_RED + "This person does not exist in this database!" + ANSI_RESET);
+                System.out.println(ANSI_RED + "Please enter a valid ID!: " + ANSI_RESET);
             }
             catch (Exception e)
             {
-                System.out.print("Invalid input. Please enter a number!: ");
+                System.out.print(ANSI_RED + "Invalid input. Please enter a number!: " + ANSI_RESET);
             }
         }
         return n;
