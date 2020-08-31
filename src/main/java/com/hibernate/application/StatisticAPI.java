@@ -1,6 +1,7 @@
 package com.hibernate.application;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
@@ -31,108 +32,127 @@ public class StatisticAPI
         }
 
         StatisticAPI stapi = new StatisticAPI();
-        stapi.getTagClassHierarchy();
-        stapi.getPopularComments(20);
-        stapi.getMostPostingCountry();
-
+        while (true)
+        {
+            stapi.listenToInput();
+        }
+        // 2.: e.g. set k = 20
     }
 
-    public void getTagClassHierarchy()
+    public void getTagClassHierarchy(Session session)
     {
-        Session session = factory.openSession();
-        Transaction tx = null;
+        List<TagClass> classes = session.createQuery("FROM TagClass", TagClass.class).getResultList();
+        TagClass rootClass = classes.get(0).retrieveRoot(); // get any TagClass
+        String taxoHead = "0";
+        System.out.println(taxoHead + " " + rootClass.getTagClassName());
+        rootClass.printTaxonomy(taxoHead);
+    }
 
-        try
+    public void getPopularComments(int k, Session session)
+    {
+        List<Comment> filteredComments = session.createQuery("FROM Comment", Comment.class)
+            .getResultList().stream()
+            .filter(s -> s.countLikes() > k)
+            .collect(Collectors.toList());
+        System.out.println("Number of Comments with more than " + k + " likes:");
+        System.out.println(filteredComments.size());
+    }
+
+    public void getMostPostingCountry(Session session)
+    {
+        List<Country> countries = session.createQuery("FROM Country ", Country.class).getResultList();
+
+        int mostMessages = 0;
+        Country countryWithMostMessages = null;
+        for (Country country : countries)
         {
-            tx = session.beginTransaction();
-
-            List<TagClass> classes = session.createQuery("FROM TagClass", TagClass.class).getResultList();
-            TagClass rootClass = classes.get(0).retrieveRoot(); // get any TagClass
-            String taxoHead = "0";
-            System.out.println(taxoHead + " " + rootClass.getTagClassName());
-            rootClass.printTaxonomy(taxoHead);
-
-            tx.commit();
-        }
-        catch (HibernateException e)
-        {
-            if (tx != null)
+            int currMessages = country.getMessagesByCountryId().size();
+            if (currMessages > mostMessages)
             {
-                tx.rollback();
+                mostMessages = currMessages;
+                countryWithMostMessages = country;
             }
-            e.printStackTrace();
         }
-        finally
+
+        if (countryWithMostMessages == null)
         {
-            session.close();
+            System.out.println("There is no country with messages at all!");
         }
-    }
-
-    public void getPopularComments(int k)
-    {
-        Session session = factory.openSession();
-        Transaction tx = null;
-
-        try
+        else
         {
-            tx = session.beginTransaction();
-
-            List<Comment> filteredComments = session.createQuery("FROM Comment", Comment.class)
-                .getResultList().stream()
-                .filter(s -> s.countLikes() > k)
-                .collect(Collectors.toList());
-            System.out.println("Number of Comments with more than " + k + " likes:");
-            System.out.println(filteredComments.size());
-
-            tx.commit();
-        }
-        catch (HibernateException e)
-        {
-            if (tx != null)
-            {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }
-        finally
-        {
-            session.close();
+            System.out.println("Country with most posts AND comments:");
+            System.out.println(countryWithMostMessages.getPlaceName());
         }
     }
 
-    public void getMostPostingCountry()
+    /**
+     * Listens to user input
+     */
+    public void listenToInput()
     {
-        Session session = factory.openSession();
-        Transaction tx = null;
+        final String ANSI_GREEN = "\u001B[32m";
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_PURPLE = "\u001B[35m";
+        final String ANSI_YELLOW = "\u001B[33m";
 
-        try
+        int n = 0;
+        boolean input = false;
+
+        System.out.println("\n\n" + ANSI_GREEN + "This is the PersonRelatedAPI:" + ANSI_RESET);
+        System.out.println("(1) getTagClassHierarchy");
+        System.out.println("(2) getPopularComments");
+        System.out.println("(3) getMostPostingCountry");
+        System.out.print("Please choose: ");
+
+        while (!input)
         {
-            tx = session.beginTransaction();
-
-            List<Country> countries = session.createQuery("FROM Country ", Country.class).getResultList();
-
-            int mostMessages = 0;
-            Country countryWithMostMessages = null;
-            for (Country country : countries)
+            try
             {
-                int currMessages = country.getMessagesByCountryId().size();
-                if (currMessages > mostMessages)
+                Scanner sc = new Scanner(System.in);
+                n = sc.nextInt();
+                if (n >= 1 && n <= 5)
                 {
-                    mostMessages = currMessages;
-                    countryWithMostMessages = country;
+                    input = true;
+                }
+                else
+                {
+                    throw new Exception(ANSI_YELLOW + "Number is not in range [1-5]." + ANSI_RESET);
                 }
             }
-
-            if (countryWithMostMessages == null)
+            catch (Exception ex1)
             {
-                System.out.println("There is no country with messages at all!");
+                System.out.print(ANSI_RED + "Invalid input. Please enter a number!: " + ANSI_RESET);
             }
-            else
-            {
-                System.out.println("Country with most posts AND comments:");
-                System.out.println(countryWithMostMessages.getPlaceName());
-            }
+        }
 
+        Session session = factory.openSession();
+        Transaction tx = null;
+
+        try
+        {
+            tx = session.beginTransaction();
+            switch (n)
+            {
+                case 1: // getTagClassHierarchy
+                {
+                    getTagClassHierarchy(session);
+                    break;
+                }
+                case 2: // getPopularComments
+                {
+                    // set parameters
+                    System.out.print("Please enter a " + ANSI_PURPLE + "threshold value" + ANSI_RESET + ": ");
+                    int k = validateInput();
+                    getPopularComments(k, session);
+                    break;
+                }
+                case 3: // getMostPostingCountry
+                {
+                    getMostPostingCountry(session);
+                    break;
+                }
+            }
             tx.commit();
         }
         catch (HibernateException e)
@@ -148,4 +168,26 @@ public class StatisticAPI
             session.close();
         }
     }
+
+    private int validateInput()
+    {
+        boolean input = false;
+        int n = 0;
+
+        while (!input)
+        {
+            try
+            {
+                Scanner sc = new Scanner(System.in);
+                n = sc.nextInt();
+                input = true;
+            }
+            catch (Exception e)
+            {
+                System.out.print("Invalid input. Please enter a number!: ");
+            }
+        }
+        return n;
+    }
+
 }
