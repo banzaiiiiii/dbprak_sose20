@@ -6,6 +6,8 @@
     <session-factory>
         <property name="connection.url">jdbc:postgresql://localhost:5432/socialnetwork</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">1234</property>
 
         <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
         <mapping class="Models.City"/>
@@ -15,19 +17,5 @@
         <mapping class="Models.Country"/>
         <mapping class="Models.Forum"/>
         <mapping class="Models.ForumHasTag"/>
-        <mapping class="test.CityEntity"/>
-        <mapping class="test.CommentEntity"/>
-        <mapping class="test.CompanyEntity"/>
-        <mapping class="test.ContinentEntity"/>
-        <mapping class="test.CountryEntity"/>
-        <mapping class="test.ForumEntity"/>
-        <mapping class="test.ForumHasTagEntity"/>
-        <mapping class="test.PlaceEntity"/>
-        <mapping class="test.OrganisationEntity"/>
-        <mapping class="test.UniversityEntity"/>
-        <mapping class="test.MessageEntity"/>
-        <mapping class="test.PersonEntity"/>
-        <mapping class="test.PersonEmailEntity"/>
-        <mapping class="test.PersonSpeaksEntity"/>
     </session-factory>
 </hibernate-configuration>

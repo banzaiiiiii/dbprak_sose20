@@ -20,7 +20,6 @@ public class Company {
         }
 
     private long companyOrganisationId;
-    @Id
     @Column(name = "company_organisation_id")
     public long getCompanyOrganisationId() {
         return companyOrganisationId;
@@ -31,7 +30,6 @@ public class Company {
     }
 
     private long companyCountryId;
-    @Id
     @Column(name = "company_country_id")
     public long getCompanyCountryId() {
         return companyCountryId;

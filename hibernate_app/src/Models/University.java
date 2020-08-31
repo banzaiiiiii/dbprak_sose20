@@ -2,6 +2,7 @@ package Models;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -42,4 +43,5 @@ public class University {
     public void setUniversityCityId(long universityCityId) {
         this.universityCityId = universityCityId;
     }
+
 }
