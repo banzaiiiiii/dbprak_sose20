@@ -1,15 +1,19 @@
 package com.hibernate.application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
+import com.hibernate.application.dijkstra.Dijkstra;
+import com.hibernate.application.dijkstra.Edge;
+import com.hibernate.application.dijkstra.Vertex;
 import com.hibernate.pojos.Person;
 
 
@@ -148,9 +152,40 @@ public class PersonRelatedAPI
 
     private void getShorthestFriendshipPath(final long thisPersonId, final long otherPersonId, Session session)
     {
-        Query query = session.createSQLQuery("SELECT * FROM pkp_SP()").addEntity(Person.class);
-        List<Person> allFoos = query.list();
+        //Query query = session.createSQLQuery("SELECT * FROM pkp_SP()").addEntity(Person.class);
+        //List<Person> persons = query.list();
+        //Person thisPers = persons.stream().filter(a -> a.getPersonId() == thisPersonId).collect(Collectors.toList()).get(0);
+        //Person target = persons.stream().filter(a -> a.getPersonId() == otherPersonId).collect(Collectors.toList()).get(0);
 
+        Person thisPers = (Person) session.createQuery("FROM Person P WHERE P.personId=" + thisPersonId).list().get(0);
+        Person target = (Person) session.createQuery("FROM Person P WHERE P.personId=" + otherPersonId).list().get(0);
+        List<Person> all = session.createQuery("FROM Person", Person.class).getResultList();
+
+        List<Vertex> vertices = new ArrayList<>();
+        for (Person p : all)
+        {
+            Vertex v = new Vertex(String.valueOf(p.getPersonId()));
+            vertices.add(v);
+        }
+        for (Vertex v : vertices)
+        {
+            Person myPers = (Person) session.createQuery("FROM Person P WHERE P.personId=" + v.name).list().get(0);
+            List<Edge> myEdges = new ArrayList<>();
+
+            myPers.retrieveBiDirFriends().forEach(e ->
+            {
+                myEdges.add(new Edge(vertices.stream().filter(a -> a.name.equals(String.valueOf(e.getPersonId()))).collect(Collectors.toList()).get(0),
+                    1));
+            });
+
+            Edge[] edges = new Edge[myEdges.size()];
+            v.adjacencies = myEdges.toArray(edges);
+        }
+        Dijkstra.computePaths(vertices.stream().filter(a -> a.name.equals(String.valueOf(thisPers.getPersonId()))).collect(Collectors.toList()).get(0)); // run Dijkstra
+        Vertex targetVertex = vertices.stream().filter(a -> a.name.equals(String.valueOf(target.getPersonId()))).collect(Collectors.toList()).get(0);
+        System.out.println("Distance to " + targetVertex + ": " + targetVertex.minDistance);
+        List<Vertex> path = Dijkstra.getShortestPathTo(targetVertex);
+        System.out.println("Path: " + path);
     }
 
     /**
@@ -182,7 +217,7 @@ public class PersonRelatedAPI
             {
                 Scanner sc = new Scanner(System.in);
                 n = sc.nextInt();
-                if (n >= 1 && n <= 5)
+                if (n >= 1 && n <= 6)
                 {
                     input = true;
                 }
@@ -245,6 +280,16 @@ public class PersonRelatedAPI
                     System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + ": ");
                     Long personId = validateInput();
                     getJobRecommendation(personId, session);
+                    break;
+                }
+                case 6: // getShorthestFriendshipPath
+                {
+                    // set parameters
+                    System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the FIRST person: ");
+                    Long thisPersId = validateInput();
+                    System.out.print("Please enter a " + ANSI_PURPLE + "person ID" + ANSI_RESET + " for the SECOND person: ");
+                    Long otherPersId = validateInput();
+                    getShorthestFriendshipPath(thisPersId, otherPersId, session);
                     break;
                 }
             }

@@ -327,7 +327,6 @@ public class Person
         this.workAtsByPersonId = workAtsByPersonId;
     }
 
-
     @OneToMany(mappedBy = "personByEmailPersonId")
     public Collection<PersonEmail> getEmailsByPersonId()
     {
@@ -338,7 +337,6 @@ public class Person
     {
         this.personEmails = personEmails;
     }
-
 
     @OneToMany(mappedBy = "personByLanguagePersonId")
     public Collection<PersonSpeaks> getLanguagesByPersonId()

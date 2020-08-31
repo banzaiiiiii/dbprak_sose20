@@ -111,7 +111,7 @@ public class StatisticAPI
             {
                 Scanner sc = new Scanner(System.in);
                 n = sc.nextInt();
-                if (n >= 1 && n <= 5)
+                if (n >= 1 && n <= 3)
                 {
                     input = true;
                 }
