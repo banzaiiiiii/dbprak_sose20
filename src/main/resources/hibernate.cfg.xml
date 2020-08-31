@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.PostgreSQL82Dialect
+        </property>
+
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <property name = "hibernate.connection.url">jdbc:postgresql://localhost:5432/socialnetwork</property>
+
+        <property name = "hibernate.connection.username">
+            postgres
+        </property>
+
+        <property name = "hibernate.connection.password">
+            rubikscube
+        </property>
+
+        <mapping class="com.hibernate.pojos.City"/>
+        <mapping class="com.hibernate.pojos.Comment"/>
+        <mapping class="com.hibernate.pojos.Company"/>
+        <mapping class="com.hibernate.pojos.Continent"/>
+        <mapping class="com.hibernate.pojos.Country"/>
+        <mapping class="com.hibernate.pojos.Forum"/>
+        <mapping class="com.hibernate.pojos.ForumHasTag"/>
+        <mapping class="com.hibernate.pojos.HasInterest"/>
+        <mapping class="com.hibernate.pojos.HasMember"/>
+        <mapping class="com.hibernate.pojos.HasType"/>
+        <mapping class="com.hibernate.pojos.IsSubclassOf"/>
+        <mapping class="com.hibernate.pojos.Knows"/>
+        <mapping class="com.hibernate.pojos.Likes"/>
+        <mapping class="com.hibernate.pojos.Message"/>
+        <mapping class="com.hibernate.pojos.MessageHasTag"/>
+        <mapping class="com.hibernate.pojos.Organisation"/>
+        <mapping class="com.hibernate.pojos.Person"/>
+        <mapping class="com.hibernate.pojos.PersonEmail"/>
+        <mapping class="com.hibernate.pojos.PersonSpeaks"/>
+        <mapping class="com.hibernate.pojos.Place"/>
+        <mapping class="com.hibernate.pojos.Post"/>
+        <mapping class="com.hibernate.pojos.StudyAt"/>
+        <mapping class="com.hibernate.pojos.Tag"/>
+        <mapping class="com.hibernate.pojos.TagClass"/>
+        <mapping class="com.hibernate.pojos.University"/>
+        <mapping class="com.hibernate.pojos.WorkAt"/>
+        <!--
+        <mapping class="com.hibernate.pojos.PkpSymmetric"/>
+        -->
+
+    </session-factory>
+</hibernate-configuration>

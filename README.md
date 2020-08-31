@@ -25,7 +25,7 @@ runDB.bat
 # Make sure the path to psql in .\database\runDB.bat fits your postgres version
 
 # Transform into relation-model
-- Inside Main.java, put in the password of your local DB
+- Inside com.dbfiller.Main.java, put in the password of your local DB
 --> DriverManager.getConnection(..., ..., <PASSWORD>)
-- Run Main.java
+- Run com.dbfiller.Main.java
 ```
