@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7c145b1-fa8c-4844-9bc3-d3342163a235" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/DB_requests.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/DB_requests.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hibernate_app/hibernate_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/hibernate_app/hibernate_app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hibernate_app/src/DbSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/hibernate_app/src/DbSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hibernate_app/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/hibernate_app/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hibernate_app/src/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hibernate_app/src/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +43,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/database" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -92,6 +94,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -107,6 +110,7 @@
       <workItem from="1590240622289" duration="1643000" />
       <workItem from="1590242307779" duration="4830000" />
       <workItem from="1593604875822" duration="9984000" />
+      <workItem from="1598810577384" duration="67000" />
     </task>
     <task id="LOCAL-00001" summary="-Ziad Sehili's suggestion">
       <created>1593612994067</created>
@@ -126,7 +130,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="-Ziad Sehili's suggestion" />
