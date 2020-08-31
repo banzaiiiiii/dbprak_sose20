@@ -174,11 +174,8 @@ public class PersonRelatedAPI
 
     private void getShorthestFriendshipPath(final long thisPersonId, final long otherPersonId, Session session)
     {
-        //Query query = session.createSQLQuery("SELECT * FROM pkp_SP()").addEntity(Person.class);
-        //List<Person> persons = query.list();
-        //Person thisPers = persons.stream().filter(a -> a.getPersonId() == thisPersonId).collect(Collectors.toList()).get(0);
-        //Person target = persons.stream().filter(a -> a.getPersonId() == otherPersonId).collect(Collectors.toList()).get(0);
-
+        // Query query = session.createSQLQuery("CALL pkp_SP()").addEntity(Person.class);
+        // List<Person> allPers = query.list();
         List<Person> all = session.createQuery("FROM Person", Person.class).getResultList();
 
         List<Vertex> vertices = new ArrayList<>();

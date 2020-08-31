@@ -381,7 +381,8 @@ public class Person
         return bidirFriends;
     }
 
-    public List<University> recommendUnis(){
+    public List<University> recommendUnis()
+    {
         List<University> recommendations = new ArrayList<>();
         List<Person> friends = this.retrieveBiDirFriends();
         for (Person friend : friends)
@@ -396,7 +397,8 @@ public class Person
         return recommendations;
     }
 
-    public List<Company> recommendCompanies(){
+    public List<Company> recommendCompanies()
+    {
         List<Company> recommendations = new ArrayList<>();
         List<Person> friends = this.retrieveBiDirFriends();
         for (Person friend : friends)
