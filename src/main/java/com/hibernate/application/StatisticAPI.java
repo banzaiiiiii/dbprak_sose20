@@ -102,7 +102,7 @@ public class StatisticAPI
         int n = 0;
         boolean input = false;
 
-        System.out.println("\n\n" + ANSI_GREEN + "This is the PersonRelatedAPI:" + ANSI_RESET);
+        System.out.println("\n\n" + ANSI_GREEN + "This is the StatisticAPI:" + ANSI_RESET);
         System.out.println("(1) getTagClassHierarchy");
         System.out.println("(2) getPopularComments");
         System.out.println("(3) getMostPostingCountry");
