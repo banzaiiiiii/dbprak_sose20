@@ -63,8 +63,13 @@ public class StatisticAPI
             .getResultList().stream()
             .filter(s -> s.countLikes() > k)
             .collect(Collectors.toList());
-        System.out.println("Number of Comments with more than " + k + " likes:");
-        System.out.println(filteredComments.size());
+        System.out.println("Comments with more than " + k + " likes:");
+        filteredComments.forEach(e -> {
+            System.out.println();
+            System.out.println(e.getCommentId());
+            System.out.println(e.getMessageByCommentMessageId().getPersonByMessagePersonId().getPersonFirstName());
+            System.out.println(e.getMessageByCommentMessageId().getPersonByMessagePersonId().getPersonLastName());
+        });
     }
 
     public void getMostPostingCountry(Session session)
@@ -102,7 +107,7 @@ public class StatisticAPI
         int n = 0;
         boolean input = false;
 
-        System.out.println("\n\n" + ANSI_GREEN + "This is the PersonRelatedAPI:" + ANSI_RESET);
+        System.out.println("\n\n" + ANSI_GREEN + "This is the StatisticAPI:" + ANSI_RESET);
         System.out.println("(1) getTagClassHierarchy");
         System.out.println("(2) getPopularComments");
         System.out.println("(3) getMostPostingCountry");
